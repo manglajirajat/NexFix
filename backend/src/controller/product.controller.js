@@ -5,7 +5,7 @@ import {uploadOnCloud} from '../utils/cloudinary.js';
 import {Product} from '../models/product.model.js';
 
 const registerProduct = AsyncHandler(async (req,res) => {
-    const {name,description,price,category,size,brand,stock,discount} = req.body;
+    const {name,description,price,category,subCategory,size,brand,stock,discount} = req.body;
 
     if(!name || !description || !price || !category || !size || !brand || !stock || !discount){
         throw new ApiError(400,"enter all required fields");
@@ -31,16 +31,13 @@ const registerProduct = AsyncHandler(async (req,res) => {
         images.push(imageUrl?.url);
     }
 
-    // console.log(name,description,price,category,size,brand,stock,discount);
-    // console.log(displayPicture);
-    // console.log(images);
-
     const product = await Product.create({
         name,
         description,
         price,
         discount,
         category,
+        subCategory,
         size,
         brand,
         stock,
