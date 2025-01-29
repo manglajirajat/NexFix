@@ -30,6 +30,16 @@ const userSchema = new mongoose.Schema({
             ref : 'Address'
         }
     ],
+    cart : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Cart'
+    },
+    order : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Order'
+        }
+    ],
     userType : {
         type : String,
         enum : ["admin","user"],
@@ -49,7 +59,7 @@ userSchema.pre("save", async function(next){
 );
 
 //to compare password
-userSchema.methods.isPasswaordCorrect = async function(password){
+userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password, this.password);
 };
 
