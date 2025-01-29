@@ -66,14 +66,16 @@ const logIn = AsyncHandler(async (req,res) => {
         throw new ApiError(400,"user not exist");
     }
     
-    const isPasswordCorrect = await user.isPasswaordCorrect(password);
+    const isPasswordCorrect = await user.isPasswordCorrect(password);
     if(!isPasswordCorrect){
         throw new ApiError(400,"incorrect password");
     }
 
     const {refreshToken,accessToken} = await generateRefreshAndAccessToken(user._id);
 
-    const loggedUser = await User.findOne(user._id).select("-password -refreshToken");
+    const loggedUser = await User.findOne(user._id)
+    .populate("address cart")
+    .select("-password -refreshToken");
 
     const options = {
         httpOnly : true,

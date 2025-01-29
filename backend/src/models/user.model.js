@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Cart'
     },
-    order : [
+    orders : [
         {
             type : mongoose.Schema.Types.ObjectId,
             ref : 'Order'
