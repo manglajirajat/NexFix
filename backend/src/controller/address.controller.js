@@ -32,7 +32,6 @@ const addAdress = AsyncHandler(async (req,res) => {
     }
 
     const address = await Address.create({
-        user : user._id,
         street,
         city,
         state,
