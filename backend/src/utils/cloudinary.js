@@ -9,20 +9,20 @@ cloudinary.config({
 
 const uploadOnCloud = async (file) => {
    try{
-    if(!file){
-        return null;
-    }
+        if(!file){
+            return null;
+        }
 
-    const uploadResult = await cloudinary.uploader.upload(file);
+        const uploadResult = await cloudinary.uploader.upload(file);
 
-    fs.unlinkSync(file);
-    return uploadResult;
+        fs.unlinkSync(file);
+        return uploadResult;
    }
    catch(err){
-    if(fs.existsSync(file)){
-        fs.unlink(file)
-    }
-    return null;
+        if(fs.existsSync(file)){
+            fs.unlinkSync(file)
+        }
+        return null;
    }
 }
 

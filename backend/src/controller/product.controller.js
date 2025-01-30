@@ -51,5 +51,4 @@ const registerProduct = AsyncHandler(async (req,res) => {
     
     res.status(201).json(new ApiResponse(201,product,'product added succesfully'));
 })
-
 export {registerProduct};

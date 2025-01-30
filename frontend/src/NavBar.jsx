@@ -13,7 +13,7 @@ export default function NavBar(){
 
             <ul className="flex pr-4">
                 <input type="text" placeholder="search for brands/product" className="bg-white m-4 rounded-full p-1 px-4 text-sm w-80"/>
-                <li className="p-4">profile</li>
+                <Link to={'/profile'}><li className="p-4">profile</li></Link>
                 <li className="p-4">cart</li>
                 <Link to={'/addProduct'}><li className="p-4 hover:border-b-2 border-black">Add product</li></Link>
             </ul>
