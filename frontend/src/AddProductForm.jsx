@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProductForm() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -51,8 +53,12 @@ export default function AddProductForm() {
                 throw new Error(result.message || "Something went wrong");
             }
 
+            navigate("/")
+
             toast.success("Product added successfully!");
-        } catch (error) {
+        } 
+        catch (error) {
+            console.log(error);
             toast.error(error.message);
         }
     };
