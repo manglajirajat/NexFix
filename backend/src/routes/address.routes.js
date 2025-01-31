@@ -4,7 +4,7 @@ import { addAdress } from "../controller/address.controller.js";
 
 const router = Router();
 
-router.route("/add/address").post(
+router.route("/add").post(
     verifyJWT,
     addAdress
 )

@@ -20,7 +20,7 @@ import cartRoute from './routes/cart.routes.js';
 
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/product',productRoute);
-app.use('/api/v1/user',addressRoute);
-app.use('/api/v1/user',cartRoute);
+app.use('/api/v1/address',addressRoute);
+app.use('/api/v1/cart',cartRoute);
 
 export default app;

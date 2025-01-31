@@ -26,6 +26,7 @@ const addInCart = AsyncHandler(async (req,res) => {
 
     if (cart) {
         const existingProduct = cart.items.find((item) => item.product.toString() === product);
+        console.log(existingProduct);
 
         if(existingProduct){
             existingProduct.quantity += Number(quantity);
@@ -50,10 +51,33 @@ const addInCart = AsyncHandler(async (req,res) => {
     getUser.cart = cart._id;
     await getUser.save({validateBeforeSave : false});
 
-    const updatedUser = getUser;
-
     res.status(201)
     .json(new ApiResponse(201,cart,"added successfully"));
 })
 
-export {addInCart};
+const removeFromCart = AsyncHandler(async (req,res) => {
+    const getUser = await User.findById(req.user._id);
+    const { product } = req.body;
+
+    if(!getUser){
+        throw new ApiError(400,"user not exist");
+    }
+
+    const cart = await Cart.findById(getUser.cart);
+
+    if(!cart){
+        throw new ApiError(400,"cart not found");
+    }
+
+    const existingProduct = cart.items.find((item) => item.product.toString() === product);
+
+    cart.items = cart.items.filter((item) => item != existingProduct);
+
+    await cart.save();
+    await getUser.save({validateBeforeSave : false});
+
+    res.status(201)
+    .json(new ApiResponse(201,cart,"removed successfully"));
+})
+
+export {addInCart,removeFromCart};

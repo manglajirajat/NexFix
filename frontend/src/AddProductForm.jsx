@@ -10,12 +10,20 @@ export default function AddProductForm() {
         size: "",
         price: "",
         category: "",
+        subCategory: "", // Added subCategory
         brand: "",
         stock: "",
         discount: "",
         displayPicture: null,
-        images: []
+        images: [],
     });
+    const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
+    // Define subcategories for each category
+    const subCategories = {
+        hardware: ["Lock", "Tools", "Nails", "Screws"],
+        paints: ["Exterior", "Interior", "Enamel", "Primer"],
+        sanitary: ["Kitchen", "Bathroom", "Faucets", "Pipes"],
+    };
 
     const handleChange = (e) => {
         if (e.target.type === "file") {
@@ -31,6 +39,7 @@ export default function AddProductForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         const data = new FormData();
         Object.keys(formData).forEach((key) => {
@@ -53,52 +62,207 @@ export default function AddProductForm() {
                 throw new Error(result.message || "Something went wrong");
             }
 
-            navigate("/")
-
             toast.success("Product added successfully!");
-        } 
-        catch (error) {
-            console.log(error);
-            toast.error(error.message);
+            navigate("/"); // Redirect to home page
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || "Failed to add product.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} encType="multipart/form-data" className="px-2">
-                <label className="block m-2">Enter product name:</label>
-                <input type="text" name="name" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+        <div className="p-4">
+            <h1 className="text-2xl font-bold mb-4 text-center">Add Product</h1>
+            <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4 px-40">
+                {/* Name */}
+                <div>
+                    <label className="block mb-1">Product Name:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter product name"
+                        required
+                    />
+                </div>
 
-                <label className="block m-2">Enter product description:</label>
-                <input type="text" name="description" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Description */}
+                <div>
+                    <label className="block mb-1">Product Description:</label>
+                    <input
+                        type="text"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter description"
+                        required
+                    />
+                </div>
 
-                <label>Enter size:</label>
-                <input type="text" name="size" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Size */}
+                <div>
+                    <label className="block mb-1">Size:</label>
+                    <input
+                        type="text"
+                        name="size"
+                        value={formData.size}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter size"
+                        required
+                    />
+                </div>
 
-                <label>Price:</label>
-                <input type="number" name="price" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Price */}
+                <div>
+                    <label className="block mb-1">Price:</label>
+                    <input
+                        type="number"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter price"
+                        required
+                    />
+                </div>
 
-                <p>Category:</p>
-                <input type="radio" name="category" value="hardware" onChange={handleChange} /> Hardware
-                <input type="radio" name="category" value="paints" onChange={handleChange} /> Paints
-                <input type="radio" name="category" value="sanitary" onChange={handleChange} /> Sanitary
+                <div className="flex justify-evenly">
+                    {/* Category */}
+                    <div>
+                        <label className="block mb-1">Category:</label>
+                        <div className="space-x-2 inline-block">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="hardware"
+                                    onChange={handleChange}
+                                    required
+                                />{" "}
+                                Hardware
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="paints"
+                                    onChange={handleChange}
+                                />{" "}
+                                Paints
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="sanitary"
+                                    onChange={handleChange}
+                                />{" "}
+                                Sanitary
+                            </label>
+                        </div>
+                    </div>
 
-                <label className="block">Brand:</label>
-                <input type="text" name="brand" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                    {/* Subcategory */}
+                    <div>
+                        <label className="mb-1">Subcategory:</label>
+                        <select
+                            name="subCategory"
+                            value={formData.subCategory}
+                            onChange={handleChange}
+                            className="w-full px-2 py-1 rounded-md border-2 border-slate-200 disabled:opacity-50"
+                            required
+                            disabled={!formData.category} // Disable if no category is selected
+                        >
+                            <option value="">Select Subcategory</option>
+                            {formData.category && subCategories[formData.category].map((subCat) => (
+                                <option value={subCat}>
+                                    {subCat}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
 
-                <label>Stock:</label>
-                <input type="number" name="stock" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Brand */}
+                <div>
+                    <label className="block mb-1">Brand:</label>
+                    <input
+                        type="text"
+                        name="brand"
+                        value={formData.brand}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter brand"
+                        required
+                    />
+                </div>
 
-                <label>Discount:</label>
-                <input type="number" name="discount" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Stock */}
+                <div>
+                    <label className="block mb-1">Stock:</label>
+                    <input
+                        type="number"
+                        name="stock"
+                        value={formData.stock}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter stock"
+                        required
+                    />
+                </div>
 
-                <label className="block m-2">Display Picture:</label>
-                <input type="file" name="displayPicture" onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Discount */}
+                <div>
+                    <label className="block mb-1">Discount:</label>
+                    <input
+                        type="number"
+                        name="discount"
+                        value={formData.discount}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter discount"
+                        required
+                    />
+                </div>
 
-                <label>Images:</label>
-                <input type="file" name="images" multiple onChange={handleChange} className="px-2 mx-2 rounded-md border-2 border-slate-200" />
+                {/* Display Picture */}
+                <div>
+                    <label className="block mb-1">Display Picture:</label>
+                    <input
+                        type="file"
+                        name="displayPicture"
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        required
+                    />
+                </div>
 
-                <button type="submit" className="bg-blue-200 block m-2 px-4 rounded-full">Submit</button>
+                {/* Images */}
+                <div>
+                    <label className="block mb-1">Product Images:</label>
+                    <input
+                        type="file"
+                        name="images"
+                        multiple
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                    />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 disabled:bg-blue-300"
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? "Submitting..." : "Submit"}
+                </button>
             </form>
         </div>
     );

@@ -18,10 +18,13 @@ const ProductSchema = new mongoose.Schema({
         required : true,
         min : 0
     },
-    discount: {
+    discount : {
         type: Number,
         default: 0,
         min: 0
+    },
+    netPrice : {
+        type : Number
     },
     category : {
         type : String,
@@ -29,9 +32,9 @@ const ProductSchema = new mongoose.Schema({
         required : true,
         index : true
     },
-    subCategory : [
-        {type : String}
-    ],
+    subCategory : {
+        type : String
+    },
     brand : {
         type : String,
         required : true,
@@ -67,6 +70,7 @@ const ProductSchema = new mongoose.Schema({
 
 ProductSchema.pre('save', function(next) {
     this.isLowStock = this.stock <= 5;
+    this.netPrice = this.price - ((this.discount * this.price) / 100);
     next();
 });
 
