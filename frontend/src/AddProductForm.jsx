@@ -73,7 +73,7 @@ export default function AddProductForm() {
     };
 
     return (
-        <div className="p-4">
+        <div className="p-4 text-center">
             <h1 className="text-2xl font-bold mb-4 text-center">Add Product</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4 px-40">
                 {/* Name */}
@@ -132,7 +132,7 @@ export default function AddProductForm() {
                     />
                 </div>
 
-                <div className="flex justify-evenly">
+                <div className="flex justify-between">
                     {/* Category */}
                     <div>
                         <label className="block mb-1">Category:</label>

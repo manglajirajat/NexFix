@@ -51,4 +51,22 @@ const registerProduct = AsyncHandler(async (req,res) => {
     
     res.status(201).json(new ApiResponse(201,product,'product added succesfully'));
 })
-export {registerProduct};
+
+const getProducts = AsyncHandler(async(req,res)=>{
+    const {category} = req.query;
+
+    let data;
+
+    if(category){
+        data = await Product.find({category : category});
+    }
+    else{
+        data = await Product.find();
+    }
+
+    res.status(200)
+    .json(new ApiResponse(200,data,`all ${category} products listed`));
+})
+
+
+export {registerProduct,getProducts};

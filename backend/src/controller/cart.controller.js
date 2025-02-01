@@ -16,9 +16,9 @@ const addInCart = AsyncHandler(async (req,res) => {
         throw new ApiError(400,"something went wrong");
     }
 
-    const items = {
+    const item = {
         product,
-        quantity,
+        quantity : Number (quantity),
         price
     };
 
@@ -26,13 +26,12 @@ const addInCart = AsyncHandler(async (req,res) => {
 
     if (cart) {
         const existingProduct = cart.items.find((item) => item.product.toString() === product);
-        console.log(existingProduct);
 
         if(existingProduct){
-            existingProduct.quantity += Number(quantity);
+            existingProduct.quantity += item.quantity;
         }
         else{
-            cart.items.push(items);
+            cart.items.push(item);
         }
 
         await cart.save();
@@ -42,7 +41,7 @@ const addInCart = AsyncHandler(async (req,res) => {
         return;
     }
 
-    cart = await Cart.create({ items: [items] });
+    cart = await Cart.create({ items: [item] });
 
     if (!cart) {
         throw new ApiError(400, "Cannot generate cart");
