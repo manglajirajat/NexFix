@@ -113,6 +113,10 @@ const logOut = AsyncHandler(async (req,res) => {
     .json(new ApiResponse(201,{},"log out successfully"))
 })
 
+ const refreshAccessToken = AsyncHandler(async (req,res) => {
+    
+ })
+
 export {
     registerUser,
     logIn,

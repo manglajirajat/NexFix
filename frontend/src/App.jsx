@@ -4,6 +4,7 @@ import Home from './Home.jsx';
 import AddProductForm from './AddProductForm.jsx';
 import Announcement from './components/Announcement.jsx';
 import Profile from './Profile.jsx';
+import Hardware from './components/Hardware.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,10 +19,11 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/hardware' element={'<h1>Helloo</h1>'}/>
+        <Route path='/hardware' element={<Hardware />}/>
         <Route path='/paints' element={<h1>paints</h1>}/>
         <Route path='/addProduct' element={<AddProductForm />}/>
         <Route path='/profile' element={<Profile />}/>
+        <Route />
       </Routes>
     </Router>
   )
