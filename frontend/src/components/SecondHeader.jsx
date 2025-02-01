@@ -29,12 +29,14 @@ export default function SecondHeader() {
             </span>
           </div>
           <div className="hidden md:block">
-            Need help? Call Us: <span className="text-blue-500">+ 0020 500</span>
+            Need help? Call Us: <span className="text-blue-500">+91 9812384731</span>
           </div>
-          <select className="bg-transparent border border-gray-300 rounded px-2 py-1">
+
+          {/* no need till now */}
+          {/* <select className="bg-transparent border border-gray-300 rounded px-2 py-1">
             <option>INR</option>
             <option>USD</option>
-          </select>
+          </select> */}
         </div>
       </div>
     </div>

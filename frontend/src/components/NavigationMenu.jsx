@@ -2,6 +2,34 @@ import { useState } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 
 const navigationItems = {
+  HARDWARE: {
+    categories: [
+      { name: "Door Hardware", items: ["Handels","Door Stoper"] },
+      { name: "Hand Tools", items: ["Karni", "Retti", "Showel", "Hammer"] },
+      { name: "Safety & Security", items: ["Door Lock","Electronic Lock","Locks"] },
+      { name: "Electrical Supplies", items: ["Wires","Pipes","Switch"] },
+      { name: "Fasteners", items: ["Screws", "Nails", "Nut & Bolts"] },
+    ],
+  },
+  PAINT: {
+    categories: [
+      { name: "Interior Paints", items: ["Royale","Pixa"] },
+      { name: "Exterior Paints", items: ["Ace","Apex Ultima"] },
+      {name : "Distemper" , items : ["Tractor UNO","Berger"]},
+      { name: "Paint Tools", items: ["Brush","Rolller","Santensils"] },
+      { name: "Enamels", items: ["Asian","Nerolac","JSW"] },
+      { name: "Primer", items: ["Wood Primer","Metal Primer"] },
+    ],
+  },
+  SANITARY: {
+    categories: [
+      { name: "Bathroom Fixtures", items: [] },
+      { name: "Toilets & Bidets", items: [] },
+      { name: "Bathroom Accessories", items: [] },
+      { name: "Plumbing", items: [] },
+      { name: "Solvent", items: [] },
+    ],
+  },
   "POWER TOOLS": {
     categories: [
       { name: "Drilling Tools", items: [] },
@@ -10,84 +38,15 @@ const navigationItems = {
       { name: "Cordless Tools", items: [] },
     ],
   },
-  "HARDWARE" : {
-    categories: [
-      { name: "Fasteners", items: [] },
-      { name: "Hand Tools", items: [] },
-      { name: "Door Hard", items: [] },
-      { name: "Safety & Security", items: [] },
-      { name: "Electrical Supplies", items: [] },
-    ],
-  },
-  "PAINT" : {
-    categories : [
-      {
-        name: "Interior Paints",
-        items: [],
-      },
-      {
-        name: "Exterior Paints",
-        items: [],
-      },
-      {
-        name: "Paint Tools",
-        items: [],
-      },
-      {
-        name: "Enamels",
-        items: [],
-      },
-      {
-        name: "Primer",
-        items: [],
-      },
-    ]
-  },
-  "SANITARY": {
-    categories: [
-      {
-        name: "Bathroom Fixtures",
-        items: [],
-      },
-      {
-        name: "Toilets & Bidets",
-        items: [],
-      },
-      {
-        name: "Bathroom Accessories",
-        items: [],
-      },
-      {
-        name: "Plumbing",
-        items: [],
-      },
-      {
-        name: "Solvent",
-        items: [],
-      },
-    ],
-  },
   "BUYING GUIDE": {
     categories: [
-      {
-        name: "Tool Selection Guides",
-        items: [],
-      },
-      {
-        name: "Paint Selection",
-        items: [],
-      },
-      {
-        name: "Installation Guides",
-        items: [],
-      },
-      {
-        name: "Maintenance Tips",
-        items: [],
-      },
+      { name: "Tool Selection Guides", items: [] },
+      { name: "Paint Selection", items: [] },
+      { name: "Installation Guides", items: [] },
+      { name: "Maintenance Tips", items: [] },
     ],
   },
-  "CONTACT": {
+  CONTACT: {
     categories: [
       {
         name: "Customer Support",
@@ -113,11 +72,6 @@ export default function NavigationMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState([]);
   const [expandedSubcategories, setExpandedSubcategories] = useState([]);
-
-  const handleCategoryClick = (category) => {
-    window.location.href = `/${category.toLowerCase().replace(/ /g, "-")}`;
-    setMobileMenuOpen(false);
-  };
 
   const toggleCategory = (category) => {
     setExpandedCategories((prev) =>
@@ -186,7 +140,7 @@ export default function NavigationMenu() {
                                   {section.items.map((item) => (
                                     <li key={item}>
                                       <a
-                                        href={`/${category.toLowerCase()}/${item.toLowerCase().replace(/ /g, "-")}`}
+                                        href={`/${category.toLowerCase()}/${section.name.toLowerCase().replace(/ /g, "-")}`}
                                         className="block py-1 text-sm text-gray-600"
                                         onClick={() => setMobileMenuOpen(false)}
                                       >
@@ -228,10 +182,7 @@ export default function NavigationMenu() {
                           <ul className="space-y-2">
                             {section.items.map((item) => (
                               <li key={item}>
-                                <a
-                                  href={`${categoryPath}/${item.toLowerCase().replace(/ /g, "-")}`}
-                                  className="text-gray-600 hover:text-blue-600 text-sm block py-1"
-                                >
+                                <a href={`${categoryPath}/${section.name.toLowerCase().replace(/ /g, "-")}`} className="text-gray-600 hover:text-blue-600 text-sm block py-1">
                                   {item}
                                 </a>
                               </li>
