@@ -7,7 +7,7 @@ export default function Hardware() {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/api/v1/product/get?category=hardware",
+                    "http://localhost:3000/api/v1/product/get?category=Hardware",
                     {
                         method: "GET",
                     }
@@ -37,7 +37,7 @@ export default function Hardware() {
                         {data.map((product) => (
                             <li key={product._id}>
                                 <img src={product.displayPicture} alt="" className="w-80"/>
-                                id = {product._id} name : {product.name} price : {product.netPrice}
+                                id = {product._id} name : {product.name} price : <span className="line-through decoration-2">${product.price}</span> price : {product.netPrice}
                             </li>
                         ))}
                     </ul>

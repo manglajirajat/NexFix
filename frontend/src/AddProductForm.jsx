@@ -20,9 +20,9 @@ export default function AddProductForm() {
     const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
     // Define subcategories for each category
     const subCategories = {
-        hardware: ["Safety & Security", "Hand Tools", "Fastenrs", "Electrical Supplies", "Door Hardware"],
-        paints: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools"],
-        sanitary: ["Bathroom Fixtures", "Toliets & Bidets", "Bathroom Accessories", "Plumbing", "Solvent"],
+        Hardware: ["Safety & Security", "Hand Tools", "Fastenrs", "Electrical Supplies", "Door Hardware"],
+        Paints: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools"],
+        Sanitary: ["Bathroom Fixtures", "Toliets & Bidets", "Bathroom Accessories", "Plumbing", "Solvent"],
     };
 
     const handleChange = (e) => {
@@ -141,7 +141,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="hardware"
+                                    value="Hardware"
                                     onChange={handleChange}
                                     required
                                 />{" "}
@@ -151,7 +151,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="paints"
+                                    value="Paint"
                                     onChange={handleChange}
                                 />{" "}
                                 Paints
@@ -160,7 +160,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="sanitary"
+                                    value="Sanitary"
                                     onChange={handleChange}
                                 />{" "}
                                 Sanitary
