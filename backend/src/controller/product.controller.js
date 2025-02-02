@@ -53,11 +53,14 @@ const registerProduct = AsyncHandler(async (req,res) => {
 })
 
 const getProducts = AsyncHandler(async(req,res)=>{
-    const {category} = req.query;
+    const {category,subCategory} = req.query;
 
     let data;
 
-    if(category){
+    if(subCategory){
+        data = await Product.find({subCategory : subCategory});
+    }
+    else if(category){
         data = await Product.find({category : category});
     }
     else{

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navigationItems = {
   HARDWARE: {
@@ -196,6 +197,7 @@ export default function NavigationMenu() {
               );
             })}
           </div>
+          <div><Link to="/addProduct" className="hover:text-blue-100">ADD PRODUCT</Link></div>
         </div>
       </div>
     </nav>

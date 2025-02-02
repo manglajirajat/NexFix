@@ -10,7 +10,7 @@ export default function AddProductForm() {
         size: "",
         price: "",
         category: "",
-        subCategory: "", // Added subCategory
+        subCategory: "",
         brand: "",
         stock: "",
         discount: "",

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-export default function HardwarePage() {
+export default function HandToolPage() {
   const [data,setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
           const response = await fetch(
-              "http://localhost:3000/api/v1/product/get?category=Hardware",
+              "http://localhost:3000/api/v1/product/get?subCategory=Hand Tools",
               {
                   method: "GET",
               }
@@ -29,7 +29,7 @@ export default function HardwarePage() {
 
   return(
     <div>
-      <h1>Hardware Products</h1>
+      <h1>Hand Tools Products</h1>
         <div className="bg-red-200">
             {data.length > 0 ? (
               <ul>
