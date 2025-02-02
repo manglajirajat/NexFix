@@ -197,7 +197,7 @@ export default function NavigationMenu() {
               );
             })}
           </div>
-          <div><Link to="/addProduct" className="hover:text-blue-100">ADD PRODUCT</Link></div>
+          <div><Link to="/addProduct" className="hover:text-blue-200">ADD PRODUCT</Link></div>
         </div>
       </div>
     </nav>

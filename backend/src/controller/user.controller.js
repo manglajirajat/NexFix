@@ -74,7 +74,6 @@ const logIn = AsyncHandler(async (req,res) => {
     const {refreshToken,accessToken} = await generateRefreshAndAccessToken(user._id);
 
     const loggedUser = await User.findOne(user._id)
-    .populate("address cart")
     .select("-password -refreshToken");
 
     const options = {

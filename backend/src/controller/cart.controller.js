@@ -79,4 +79,21 @@ const removeFromCart = AsyncHandler(async (req,res) => {
     .json(new ApiResponse(201,cart,"removed successfully"));
 })
 
-export {addInCart,removeFromCart};
+const getCart = AsyncHandler( async (req,res) => {
+    const user = await User.findById(req.user._id);
+
+    if(!user){
+        throw new ApiError("user not exist");
+    }
+
+    const cart = await Cart.findById(user.cart);
+
+    if(!cart){
+        throw new ApiError(400,"can not get cart");
+    }
+
+    res.status(201)
+    .json(new ApiResponse(201,cart,"users cart"));
+})
+
+export {addInCart,removeFromCart,getCart};
