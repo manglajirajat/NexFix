@@ -11,7 +11,6 @@ import Footer from "../components/Footer"; // ✅ Added missing import
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      <h1>Hello World</h1>
       <AnnouncementBar />
       <NavigationMenu />
       <HeroCarousel />
