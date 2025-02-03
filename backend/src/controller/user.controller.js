@@ -85,7 +85,7 @@ const logIn = AsyncHandler(async (req,res) => {
     cookie("accessToken",accessToken,options).
     cookie("refreshToken",refreshToken,options).
     json(new ApiResponse(
-        201,
+        200,
         {
             user : loggedUser,accessToken,refreshToken
         },

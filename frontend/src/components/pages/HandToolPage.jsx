@@ -25,7 +25,7 @@ export default function HandToolPage() {
     };
 
     fetchData();
-  })
+  },[]);
 
   return(
     <div>

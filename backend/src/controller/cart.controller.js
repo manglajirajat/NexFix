@@ -83,7 +83,7 @@ const getCart = AsyncHandler( async (req,res) => {
     const user = await User.findById(req.user._id);
 
     if(!user){
-        throw new ApiError("user not exist");
+        throw new ApiError(400,"user not exist");
     }
 
     const cart = await Cart.findById(user.cart);

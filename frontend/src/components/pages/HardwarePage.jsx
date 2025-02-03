@@ -25,7 +25,20 @@ export default function HardwarePage() {
     };
 
     fetchData();
-  })
+  },[]);
+
+  const addInCart = async (product,price) => {
+    const qty = 1;
+    const response = await fetch("http://localhost:3000/api/v1/cart/addInCart",
+      {method : "POST",body:{product,price,qty}}
+    )
+
+    if(!response.ok){
+      throw new Error("error adding product")
+    }
+
+    console.log("added");
+  }
 
   return(
     <div>
@@ -36,7 +49,12 @@ export default function HardwarePage() {
                 {data.map((product) => (
                   <li key={product._id}>
                     <img src={product.displayPicture} alt="" className="w-80"/>
-                      id = {product._id} name : {product.name} MRP : <span className="line-through decoration-2">${product.price}</span> price : {product.netPrice}
+                      id = {product._id} name : {product.name} 
+                      MRP : <span className="line-through decoration-2">${product.price}</span> 
+                      price : {product.netPrice}
+                      <button className="bg-blue-500 text-white rounded-full block px-2 m-2 hover:bg-blue-600" 
+                      onClick={() => {
+                        addInCart(product._id,product.price)}}>Add to cart</button>
                   </li>
                 ))}
               </ul>

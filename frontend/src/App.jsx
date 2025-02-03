@@ -4,6 +4,9 @@ import AnnouncementBar from "./components/AnnouncementBar.jsx";
 import NavigationMenu from "./components/NavigationMenu.jsx";
 import SecondHeader from "./components/SecondHeader.jsx";
 
+//my account
+import Profile from "./components/Profile.jsx";
+
 //form imports
 import AddProductForm from "./components/AddProductForm.jsx";
 
@@ -19,6 +22,7 @@ export default function App() {
       <NavigationMenu />
       <Routes>
         <Route path="/" element={"ye le"} />
+        <Route path="/account" element={<Profile />} />
         <Route path="/addProduct" element={<AddProductForm />} />
         <Route path="/hardware" element={<HardwarePage />} />
         <Route path="/hardware/hand-tools" element={<HandToolPage />} /> 
