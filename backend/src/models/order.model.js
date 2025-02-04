@@ -18,6 +18,14 @@ const orderItemSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
+    name : {
+        type : String,
+        required : true
+    },
+    contactNumber : {
+        type : String,
+        required : true
+    },
     items: [orderItemSchema],
     total: {
         type: Number,
@@ -35,7 +43,7 @@ const orderSchema = new mongoose.Schema({
     },
     paymentStatus: {
         type: String,
-        enum: ['pending', 'completed', 'failed'],
+        enum: ['pending', 'completed', 'to be collected'],
         default: 'pending',
     },
     orderStatus: {
@@ -44,10 +52,5 @@ const orderSchema = new mongoose.Schema({
         default: 'pending',
     },
 }, { timestamps: true });
-
-orderSchema.pre("save", function(next) {
-    this.total = this.items.reduce((acc, item) => acc + item.quantity * item.price, 0);
-    next();
-})
 
 export const Order = mongoose.model('Order', orderSchema);

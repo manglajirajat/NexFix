@@ -53,11 +53,14 @@ const registerProduct = AsyncHandler(async (req,res) => {
 })
 
 const getProducts = AsyncHandler(async(req,res)=>{
-    const {category} = req.query;
+    const {category,subCategory} = req.query;
 
     let data;
 
-    if(category){
+    if(subCategory){
+        data = await Product.find({subCategory : subCategory});
+    }
+    else if(category){
         data = await Product.find({category : category});
     }
     else{
@@ -67,6 +70,5 @@ const getProducts = AsyncHandler(async(req,res)=>{
     res.status(200)
     .json(new ApiResponse(200,data,`all ${category} products listed`));
 })
-
 
 export {registerProduct,getProducts};

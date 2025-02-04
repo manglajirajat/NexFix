@@ -1,29 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+//navbar imports
 import AnnouncementBar from "./components/AnnouncementBar.jsx";
 import NavigationMenu from "./components/NavigationMenu.jsx";
+import SecondHeader from "./components/SecondHeader.jsx";
+
+//my account
+import LogIn from "./components/LogIn.jsx";
+
+//form imports
+import AddProductForm from "./components/AddProductForm.jsx";
+
+//pages import
 import HardwarePage from "./components/pages/HardwarePage.jsx";
-import { Link } from "react-router-dom";
-import { MapPin } from "lucide-react";
-import { User, ShoppingCart } from "lucide-react";
-import LocationSelector from "./components/LocationSelector.jsx";
-import AnimatedSearch from "./components/AnimatedSearch.jsx";
-import HeroCarousel from "./components/HeroCarousel.jsx";
-import { CategoriesGrid } from "./components/CategoriesGrid.jsx";
-import { HotProducts } from "./components/HotProducts.jsx";
-import { SpecialOffers } from "./components/SpecialOffers.jsx";
-import { FeaturedProducts } from "./components/FeaturedProducts.jsx";
-import { BrandShowcase } from "./components/BrandShowcase.jsx";
-import { Footer } from "./components/Footer.jsx";
-import { Home } from "lucide-react";
-// import About from "./routes/About";
-// import Account from "./routes/Account";
-// import Cart from "./routes/Cart";
-// import Tracking from "./routes/Tracking";
-// import Wishlist from "./routes/Wishlist";
-// import SanitaryPage from "./components/pages/SanitaryPage";
-// import HardwarePage from "./components/pages/HardwarePage";
-// import PaintPage from "./components/pages/PaintPage";
-// import PowerToolsPage from "./components/pages/PowerToolsPage";
+import HandToolPage from "./components/pages/HandToolPage.jsx";
 
 export default function App() {
   return (
@@ -100,46 +90,10 @@ export default function App() {
 </header>
 
       <NavigationMenu />
-      
-      {/* Hero Carousel */}
-      <HeroCarousel />
-
-      {/* Trust Badges */}
-<div className="container mx-auto px-4 py-8 lg:py-12 border-t">
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-    {[
-      { value: "25+", label: "Years of Excellence" },
-      { value: "100K+", label: "Satisfied Customers" },
-      { value: "500+", label: "Premium Brands" },
-      { value: "24/7", label: "Expert Support" },
-    ].map((badge, index) => (
-      <div key={index} className="text-center">
-        <div className="text-2xl lg:text-4xl font-bold text-blue-600 mb-2">{badge.value}</div>
-        <div className="text-sm lg:text-base text-gray-600">{badge.label}</div>
-      </div>
-    ))}
-  </div>
-</div>
-
-<CategoriesGrid />
-<HotProducts />
-<SpecialOffers />
-<FeaturedProducts />
-<BrandShowcase />
-<Footer />
-
-
       <Routes>
-        <Route path="/" element={""} />
+        <Route path="/" element={"ye le"} />
         <Route path="/hardware" element={<HardwarePage />} />
-        {/* <Route path="/account" element={<Account />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/tracking" element={<Tracking />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/sanitary" element={<SanitaryPage />} />
-        <Route path="/hardware" element={<HardwarePage />} />
-        <Route path="/paint" element={<PaintPage />} />
-        <Route path="/power-tools" element={<PowerToolsPage />} /> */}
+        <Route path="/hardware/hand-tools" element={<HandToolPage />} /> 
       </Routes>
     </Router>
   );

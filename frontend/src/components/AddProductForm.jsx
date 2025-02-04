@@ -10,7 +10,7 @@ export default function AddProductForm() {
         size: "",
         price: "",
         category: "",
-        subCategory: "", // Added subCategory
+        subCategory: "",
         brand: "",
         stock: "",
         discount: "",
@@ -21,7 +21,7 @@ export default function AddProductForm() {
     // Define subcategories for each category
     const subCategories = {
         Hardware: ["Safety & Security", "Hand Tools", "Fastenrs", "Electrical Supplies", "Door Hardware"],
-        Paints: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools"],
+        Paints: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools","Distemper"],
         Sanitary: ["Bathroom Fixtures", "Toliets & Bidets", "Bathroom Accessories", "Plumbing", "Solvent"],
     };
 
@@ -151,7 +151,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="Paint"
+                                    value="Paints"
                                     onChange={handleChange}
                                 />{" "}
                                 Paints
@@ -181,7 +181,7 @@ export default function AddProductForm() {
                         >
                             <option value="">Select Subcategory</option>
                             {formData.category && subCategories[formData.category].map((subCat) => (
-                                <option value={subCat}>
+                                <option value={subCat} key={subCat}>
                                     {subCat}
                                 </option>
                             ))}

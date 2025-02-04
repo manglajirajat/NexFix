@@ -74,7 +74,6 @@ const logIn = AsyncHandler(async (req,res) => {
     const {refreshToken,accessToken} = await generateRefreshAndAccessToken(user._id);
 
     const loggedUser = await User.findOne(user._id)
-    .populate("address cart")
     .select("-password -refreshToken");
 
     const options = {
@@ -82,11 +81,11 @@ const logIn = AsyncHandler(async (req,res) => {
         secure : true
     }
 
-    return res.status(201).
+    return res.status(200).
     cookie("accessToken",accessToken,options).
     cookie("refreshToken",refreshToken,options).
     json(new ApiResponse(
-        201,
+        200,
         {
             user : loggedUser,accessToken,refreshToken
         },
@@ -110,15 +109,24 @@ const logOut = AsyncHandler(async (req,res) => {
     res.status(201)
     .clearCookie("accessToken",options)
     .clearCookie("refreshToken",options)
-    .json(new ApiResponse(201,{},"log out successfully"))
+    .json(new ApiResponse(200,{},"log out successfully"))
 })
 
- const refreshAccessToken = AsyncHandler(async (req,res) => {
-    
- })
+const getLoggedInUser = AsyncHandler(async (req,res) => {
+    const user = await User.findById(req.user._id)
+    .select("-password -refreshToken")
+    .populate("address cart orders");
+
+    if(!user){
+        throw new ApiError(404,"user not found");
+    }
+
+    return res.status(200).json(new ApiResponse(200,user,"user found"));
+})
 
 export {
     registerUser,
     logIn,
     logOut,
+    getLoggedInUser
 }
