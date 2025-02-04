@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MapPin, Search, User, ShoppingCart } from "lucide-react";
 import { ToastContainer } from "react-toastify";
 //navbar imports
 import AnnouncementBar from "./components/AnnouncementBar.jsx";
 import NavigationMenu from "./components/NavigationMenu.jsx";
-import SecondHeader from "./components/SecondHeader.jsx";
+import LocationSelector from "./components/LocationSelector.jsx";
+import AnimatedSearch from "./components/AnimatedSearch.jsx";
 
 //my account
 import LogIn from "./components/LogIn.jsx";
