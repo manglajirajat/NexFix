@@ -95,6 +95,7 @@ export default function App() {
       <NavigationMenu />
       <Routes>
         <Route path="/" element={"ye le"} />
+        <Route path="/account" element={<LogIn />} />
         <Route path="/hardware" element={<HardwarePage />} />
         <Route path="/hardware/hand-tools" element={<HandToolPage />} /> 
       </Routes>
