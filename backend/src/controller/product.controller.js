@@ -71,5 +71,4 @@ const getProducts = AsyncHandler(async(req,res)=>{
     .json(new ApiResponse(200,data,`all ${category} products listed`));
 })
 
-
 export {registerProduct,getProducts};

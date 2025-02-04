@@ -88,10 +88,19 @@ const placeOrderViaCart = AsyncHandler( async (req,res) => {
     return res.status(201).json(new ApiResponse(201,order,"order placed successfully"));
 })
 
-// const placeOrder = AsyncHandler ( async (req,res) = {
+const getoOrders = AsyncHandler(async (req,res) => {
+    const user = await User.findById(req.user._id).populate("orders");
 
-// })
+    if(!user){
+        throw new ApiError(400,"user not found");
+    }
+
+    const orders = user.orders;
+
+    return res.status(200).json(new ApiResponse(200,orders,"orders fetched successfully"));
+})
 
 export {
-    placeOrderViaCart
+    placeOrderViaCart,
+    getoOrders
 }

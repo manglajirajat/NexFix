@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -73,6 +73,37 @@ export default function NavigationMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState([]);
   const [expandedSubcategories, setExpandedSubcategories] = useState([]);
+  const [userType,setUserType] = useState(null);
+
+  const checkAuthStatus = async()=>{
+    const token = localStorage.getItem("accessToken");
+    if(!token){
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/user/me", {
+          method: "GET",
+          headers: { 
+              Authorization: `Bearer ${token}`, // Send stored token
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error("Invalid token");
+      }
+
+      const result = await response.json();
+      setUserType(result.data.userType);
+    } catch (error) {
+        console.log("User not logged in:", error);
+        localStorage.removeItem("accessToken"); // Remove invalid token
+    }
+  }
+
+  useEffect(()=>{
+    checkAuthStatus();
+  },[])
 
   const toggleCategory = (category) => {
     setExpandedCategories((prev) =>
@@ -197,7 +228,12 @@ export default function NavigationMenu() {
               );
             })}
           </div>
-          <div><Link to="/addProduct" className="hover:text-blue-200">ADD PRODUCT</Link></div>
+          {/* <div><Link to="/addProduct" className="hover:text-blue-200">ADD PRODUCT</Link></div> */}
+          {(userType === "admin") ? (
+            <div><Link to="/addProduct" className="hover:text-blue-200">ADD PRODUCT</Link></div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </nav>

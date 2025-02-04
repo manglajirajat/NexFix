@@ -14,7 +14,7 @@ router.route("/delete").post(
     deleteAddress
 )
 
-router.route("/get").get(
+router.route("/getAddress").get(
     verifyJWT,
     getAddress
 )
