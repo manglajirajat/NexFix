@@ -21,7 +21,7 @@ export default function AddProductForm() {
     // Define subcategories for each category
     const subCategories = {
         Hardware: ["Safety & Security", "Hand Tools", "Fastenrs", "Electrical Supplies", "Door Hardware"],
-        Paints: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools","Distemper"],
+        Paint: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools","Distemper"],
         Sanitary: ["Bathroom Fixtures", "Toliets & Bidets", "Bathroom Accessories", "Plumbing", "Solvent"],
     };
 
@@ -151,10 +151,10 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="Paints"
+                                    value="Paint"
                                     onChange={handleChange}
                                 />{" "}
-                                Paints
+                                Paint
                             </label>
                             <label>
                                 <input
