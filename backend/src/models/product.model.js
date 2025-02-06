@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+//badge add krna hai
+//featured add krna hai
+
 const ProductSchema = new mongoose.Schema({
     name : {
         type : String,
@@ -56,6 +59,13 @@ const ProductSchema = new mongoose.Schema({
     images : [
         {type : String}
     ],
+    badge : {
+        type : String,
+    },
+    featured : {
+        type : Boolean,
+        default : false
+    },
     rating : {
         type : Number,
         default : 0

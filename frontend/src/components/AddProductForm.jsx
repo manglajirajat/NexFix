@@ -14,9 +14,12 @@ export default function AddProductForm() {
         brand: "",
         stock: "",
         discount: "",
+        badge : "",
+        featured : false,
         displayPicture: null,
         images: [],
     });
+
     const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
     // Define subcategories for each category
     const subCategories = {
@@ -32,7 +35,9 @@ export default function AddProductForm() {
             } else {
                 setFormData({ ...formData, images: [...e.target.files] });
             }
-        } else {
+        } else if (e.target.type === "checkbox") {
+            setFormData({ ...formData, [e.target.name]: e.target.checked});
+        }  else {
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
     };
@@ -228,6 +233,31 @@ export default function AddProductForm() {
                         className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
                         placeholder="Enter discount"
                         required
+                    />
+                </div>
+
+                {/* Badge */}
+                <div>
+                    <label className="block mb-1">Badge :</label>
+                    <input
+                        type="text"
+                        name="badge"
+                        value={formData.badge}
+                        onChange={handleChange}
+                        className="w-full px-2 py-1 rounded-md border-2 border-slate-200"
+                        placeholder="Enter Badge"
+                    />
+                </div>
+
+                {/* Featured */}
+                <div>
+                    <label className="mb-1 mr-2">Featured :</label>
+                    <input
+                        type="checkbox"
+                        name="featured"
+                        checked={formData.featured}
+                        onChange={handleChange}
+                        className="w-4 h-4"
                     />
                 </div>
 
