@@ -9,22 +9,19 @@ import AnnouncementBar from "./components/AnnouncementBar.jsx";
 import NavigationMenu from "./components/NavigationMenu.jsx";
 import LocationSelector from "./components/LocationSelector.jsx";
 import AnimatedSearch from "./components/AnimatedSearch.jsx";
-import HeroCarousel from "./components/HeroCarousel.jsx";
-import TrustBadge from "./components/TrustBadge.jsx";
-import { CategoriesGrid } from "./components/CategoriesGrid.jsx";
-import { HotProducts } from "./components/HotProducts.jsx";
-import { SpecialOffers } from "./components/SpecialOffers.jsx";
-import { FeaturedProducts } from "./components/FeaturedProducts.jsx";
-import { BrandShowcase } from "./components/BrandShowcase.jsx";
-import { Footer } from "./components/Footer.jsx";
+
 // Form imports
 import AddProductForm from "./components/AddProductForm.jsx";
+
+// Footer import
+import { Footer } from "./components/Footer.jsx";
 
 // My account
 import LogIn from "./components/LogIn.jsx";
 
 // Pages import
 import ProductList from "./components/pages/ProductList.jsx";
+import HeroPage from "./components/pages/HomePage.jsx";
 
 export default function App() {
   const [profile, setProfile] = useState(null);
@@ -137,16 +134,9 @@ export default function App() {
 
       <ToastContainer />
       <NavigationMenu />
-      <HeroCarousel />
-      <TrustBadge />
-      <CategoriesGrid />
-      <HotProducts />
-      <SpecialOffers />
-      <FeaturedProducts />
-      <BrandShowcase />
-      <Footer />
+      
       <Routes>
-        <Route path="/" element={<ProductList />} />
+        <Route path="/" element={<HeroPage />} />
         <Route path="/addProduct" element={<AddProductForm />} />
         <Route path="/account" element={<LogIn />} />
         <Route path="/hardware" element={<ProductList category="Hardware" />} />
@@ -156,6 +146,8 @@ export default function App() {
         <Route path="/paint/interior-paints" element={<ProductList subCategory="Interior" />} />
         <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} />
       </Routes>
+
+      <Footer />
     </Router>
   );
 }
