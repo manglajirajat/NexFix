@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MapPin, User, ShoppingCart } from "lucide-react";
 import { ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
 
 // Navbar imports
 import AnnouncementBar from "./components/AnnouncementBar.jsx";
@@ -19,6 +20,39 @@ import LogIn from "./components/LogIn.jsx";
 import ProductList from "./components/pages/ProductList.jsx";
 
 export default function App() {
+  const [profile, setProfile] = useState(null);
+  const checkAuthStatus = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if(!token) {
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/user/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if(!response.ok) {
+        throw new Error("An error occurred while checking for authentication");
+      }
+
+      const result = await response.json();
+      console.log(result);
+
+      setProfile(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    checkAuthStatus();
+  },[]);
+
   return (
     <Router>
       <AnnouncementBar />
@@ -79,7 +113,7 @@ export default function App() {
           <div className="flex items-center gap-4">
             <Link to="/account" className="flex items-center gap-2 hover:text-blue-600">
               <User className="w-5 h-5" />
-              <span className="hidden sm:inline">Account</span>
+              <span className="hidden sm:inline">{profile ? (profile.name.charAt(0).toUpperCase()+profile.name.slice(1)) : ("Log In")}</span>
             </Link>
             <Link to="/cart" className="flex items-center gap-2">
               <div className="relative">
@@ -105,6 +139,7 @@ export default function App() {
         <Route path="/hardware/hand-tools" element={<ProductList subCategory="Hand Tools" />} />
         <Route path="/hardware/safety-&-security" element={<ProductList subCategory="Safety %26 Security" />} />
         <Route path="/paint" element={<ProductList category="Paint" />} />
+        <Route path="/paint/interior-paints" element={<ProductList subCategory="Interior" />} />
         <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} />
       </Routes>
     </Router>
