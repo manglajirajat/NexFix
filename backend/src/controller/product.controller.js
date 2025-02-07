@@ -77,13 +77,22 @@ const getProductDetails = AsyncHandler(async (req,res) =>{
 
 // why all this to not make seprate link of all pages here it automatically fetches the data based on the category from
 // data passed in url which is good practice see example when product clicked it impossible to write their route
-const getProducts = AsyncHandler(async(req,res)=>{
+const getCategoryProduct = AsyncHandler(async(req,res)=>{
     const {category} = req.params;
 
     const data = await Product.find({category});
 
     res.status(200)
     .json(new ApiResponse(200,data,`all ${category} products listed`));
+});
+
+const getSubcatProduct = AsyncHandler(async (req,res) => {
+    const { subCategory } = req.params;
+
+    const data = await Product.find({subCategory});
+
+    res.status(200)
+    .json(new ApiResponse(200,data,`all ${subCategory} products listed`));
 });
 
 const getFeaturedProducts = AsyncHandler(async(req,res)=>{
@@ -93,4 +102,9 @@ const getFeaturedProducts = AsyncHandler(async(req,res)=>{
     .json(new ApiResponse(200,data,'featured products listed'));
 });
 
-export {registerProduct,getProductDetails,getProducts,getFeaturedProducts};
+export {registerProduct,
+    getProductDetails,
+    getCategoryProduct,
+    getSubcatProduct,
+    getFeaturedProducts,
+};

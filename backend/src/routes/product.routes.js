@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { upload } from '../middleware/multer.js';
-import { registerProduct, getProducts, getProductDetails, getFeaturedProducts } from '../controller/product.controller.js';
+import { registerProduct, getCategoryProduct, getProductDetails, getFeaturedProducts, getSubcatProduct } from '../controller/product.controller.js';
 
 const router = Router();
 
@@ -19,7 +19,11 @@ router.route("/getProductDetail/:product_id").get(
 );
 
 router.route("/getCategory/:category").get(
-    getProducts
+    getCategoryProduct
+);
+
+router.route("/getSubcategory/:subCategory").get(
+    getSubcatProduct
 );
 
 router.route("/getfeatured").get(

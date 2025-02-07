@@ -4,33 +4,59 @@ import { useParams } from "react-router-dom"
 export default function ProductList(){
     const [data,setData] = useState([]);
     const {category,subCategory} = useParams();
+
+    const fetchCategoryData = async(category) => {
+      try{
+          
+          const response = await fetch(`http://localhost:3000/api/v1/product/getCategory/${category}`,
+              {
+                  method : "GET"
+              }
+          );
+
+          if(!response.ok){
+              throw new Error("failed to fetch products")
+          }
+
+          const result = await response.json();
+
+          setData(result.data);
+      } catch(error) {
+          console.log(error);
+      }
+  }
+
+  const fetchSubcatData = async(subCategory) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/product/getSubcategory/${subCategory}`,
+        {
+          method : "GET"
+        }
+      );
+      
+      if(!response.ok){
+        throw new Error("failed to fetch");
+      }
+
+      const result = await response.json();
+
+      setData(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
     
     useEffect(() => {
-      console.log(category);
-      console.log(subCategory);
-        const fetchData = async() => {
-            try{
-                
-                const response = await fetch(`http://localhost:3000/api/v1/product/get/${category}`,
-                    {
-                        method : "GET"
-                    }
-                );
-
-                if(!response.ok){
-                    throw new Error("failed to fetch products")
-                }
-
-                const result = await response.json();
-
-                setData(result.data);
-            } catch(error) {
-                console.log(error);
-            }
+        if(subCategory){
+          fetchSubcatData(subCategory);
+          return;
         }
-
-        fetchData();
-    },[category]);
+        
+        if(category){
+          fetchCategoryData(category);
+          return;
+        }
+    },[]);
 
     return(
         <div>
