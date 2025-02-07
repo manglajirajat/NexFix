@@ -149,8 +149,8 @@ export default function NavigationMenu() {
                         onClick={() => toggleCategory(category)}
                         className="flex items-center justify-between w-full text-left py-2 font-medium"
                       >
-                        <span>{category}</span>
-                        <ChevronRight className="w-4 h-4" />
+                        <span className="text-black">{category}</span>
+                        <ChevronRight className="w-4 h-4 text-black" />
                       </button>
                       {expandedCategories.includes(category) && (
                         <div className="pl-4 space-y-2">

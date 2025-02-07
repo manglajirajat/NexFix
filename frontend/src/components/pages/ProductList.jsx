@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
-export default function ProductList({category = "", subCategory = ""}){
+export default function ProductList(){
     const [data,setData] = useState([]);
+    const {category,subCategory} = useParams();
     
     useEffect(() => {
+      console.log(category);
+      console.log(subCategory);
         const fetchData = async() => {
             try{
                 
-                const response = await fetch(`http://localhost:3000/api/v1/product/get?category=${category}&subCategory=${subCategory}`,
+                const response = await fetch(`http://localhost:3000/api/v1/product/get/${category}`,
                     {
                         method : "GET"
                     }
@@ -26,11 +30,11 @@ export default function ProductList({category = "", subCategory = ""}){
         }
 
         fetchData();
-    },[category,subCategory]);
+    },[category]);
 
     return(
         <div>
-        <h1>{category ? (category) : (subCategory)} Products</h1>
+        <h1>{category ? (category) : ("")} Products</h1>
           <div className="bg-red-200">
               {data.length > 0 ? (
                 <ul>

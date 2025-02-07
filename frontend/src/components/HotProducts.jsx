@@ -6,7 +6,7 @@ export function HotProducts() {
 
   const getProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/product/get");
+      const response = await fetch("http://localhost:3000/api/v1/product/getfeatured");
 
       if(!response.ok){
         throw new Error("error occured while fetching the data");
@@ -53,7 +53,10 @@ export function HotProducts() {
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <span className="text-lg font-bold text-blue-600">₹{product.netPrice}</span>
-                  <span className="text-sm text-gray-500 line-through">₹{product.price}</span>
+                  <span className="text-sm text-gray-500 line-through mb-2">₹{product.price}</span>
+                </div>
+                <div>
+                  <button className="bg-yellow-400 text-white px-2 py-1 rounded-md hover:text-black">add to cart</button>
                 </div>
               </div>
             </div>

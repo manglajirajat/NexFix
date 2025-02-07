@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
 
-//badge add krna hai
-//featured add krna hai
-
 const ProductSchema = new mongoose.Schema({
     name : {
         type : String,
@@ -31,7 +28,7 @@ const ProductSchema = new mongoose.Schema({
     },
     category : {
         type : String,
-        enum : ["Hardware","Paint","Sanitary"],
+        enum : ["hardware","paint","sanitary"],
         required : true,
         index : true
     },

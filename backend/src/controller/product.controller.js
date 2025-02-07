@@ -52,31 +52,45 @@ const registerProduct = AsyncHandler(async (req,res) => {
     }
     
     res.status(201).json(new ApiResponse(201,product,'product added succesfully'));
-})
+});
 
+const getProductDetails = AsyncHandler(async (req,res) =>{
+    const {product_id} = req.params;
+
+    if(!product_id){
+        throw new ApiError(400,'product_id is mandatory');
+    }
+
+    const product = await Product.findById(product_id);
+
+    if(!product){
+        throw new ApiError(404,'product not found');
+    }
+
+    res.status(200).json(new ApiResponse(200,product,'product details'));
+});
+
+// get products based on category, subCategory, badge sepreately and also have a seperate route for all of them
+// here is example of category endpoint and corresponding route in product.routes.js
+// also have to give common name in category and subCategory in product model as navigation menu is based on this which is 
+// all lower case along with - in between
+
+// why all this to not make seprate link of all pages here it automatically fetches the data based on the category from
+// data passed in url which is good practice see example when product clicked it impossible to write their route
 const getProducts = AsyncHandler(async(req,res)=>{
-    const {category,subCategory,featured,badge} = req.query;
+    const {category} = req.params;
 
-    let data;
-
-    if(featured){
-        data = await Product.find({featured : true});
-    }
-    else if (badge){
-        data = await Product.find({badge : badge});
-    }
-    else if(subCategory){
-        data = await Product.find({subCategory : subCategory});
-    }
-    else if(category){
-        data = await Product.find({category : category});
-    }
-    else{
-        data = await Product.find();
-    }
+    const data = await Product.find({category});
 
     res.status(200)
     .json(new ApiResponse(200,data,`all ${category} products listed`));
-})
+});
 
-export {registerProduct,getProducts};
+const getFeaturedProducts = AsyncHandler(async(req,res)=>{
+    const data = await Product.find();
+
+    res.status(200)
+    .json(new ApiResponse(200,data,'featured products listed'));
+});
+
+export {registerProduct,getProductDetails,getProducts,getFeaturedProducts};

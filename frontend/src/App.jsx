@@ -22,6 +22,7 @@ import LogIn from "./components/LogIn.jsx";
 // Pages import
 import ProductList from "./components/pages/ProductList.jsx";
 import HeroPage from "./components/pages/HomePage.jsx";
+import Product from "./components/pages/Product.jsx";
 
 export default function App() {
   const [profile, setProfile] = useState(null);
@@ -45,7 +46,6 @@ export default function App() {
       }
 
       const result = await response.json();
-      console.log(result);
 
       setProfile(result.data);
     } catch (error) {
@@ -139,12 +139,18 @@ export default function App() {
         <Route path="/" element={<HeroPage />} />
         <Route path="/addProduct" element={<AddProductForm />} />
         <Route path="/account" element={<LogIn />} />
-        <Route path="/hardware" element={<ProductList category="Hardware" />} />
+        <Route path="/:category" element={<ProductList />} />
+        <Route path="/:category/:subCategory" element={<ProductList />} />
+        <Route path="/contact" element={"hii"} />
+        <Route path="/contact/customer-support" element={"ram ram"} />
+        {/* <Route path="/hardware" element={<ProductList category="Hardware" />} />
         <Route path="/hardware/hand-tools" element={<ProductList subCategory="Hand Tools" />} />
         <Route path="/hardware/safety-&-security" element={<ProductList subCategory="Safety %26 Security" />} />
         <Route path="/paint" element={<ProductList category="Paint" />} />
         <Route path="/paint/interior-paints" element={<ProductList subCategory="Interior" />} />
-        <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} />
+        <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} /> */}
+
+        <Route path="/product/:productId" element={<Product />} />
       </Routes>
 
       <Footer />
