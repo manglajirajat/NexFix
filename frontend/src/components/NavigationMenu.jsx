@@ -1,25 +1,25 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navigationItems = {
   HARDWARE: {
     categories: [
-      { name: "Door Hardware", items: ["Handels","Door Stoper"] },
+      { name: "Door Hardware", items: ["Handels", "Door Stoper"] },
       { name: "Hand Tools", items: ["Karni", "Retti", "Showel", "Hammer"] },
-      { name: "Safety & Security", items: ["Door Lock","Electronic Lock","Locks"] },
-      { name: "Electrical Supplies", items: ["Wires","Pipes","Switch"] },
+      { name: "Safety & Security", items: ["Door Lock", "Electronic Lock", "Locks"] },
+      { name: "Electrical Supplies", items: ["Wires", "Pipes", "Switch"] },
       { name: "Fasteners", items: ["Screws", "Nails", "Nut & Bolts"] },
     ],
   },
   PAINT: {
     categories: [
-      { name: "Interior Paints", items: ["Royale","Pixa"] },
-      { name: "Exterior Paints", items: ["Ace","Apex Ultima"] },
-      {name : "Distemper" , items : ["Tractor UNO","Berger"]},
-      { name: "Paint Tools", items: ["Brush","Rolller","Santensils"] },
-      { name: "Enamels", items: ["Asian","Nerolac","JSW"] },
-      { name: "Primer", items: ["Wood Primer","Metal Primer"] },
+      { name: "Interior Paints", items: ["Royale", "Pixa"] },
+      { name: "Exterior Paints", items: ["Ace", "Apex Ultima"] },
+      { name: "Distemper", items: ["Tractor UNO", "Berger"] },
+      { name: "Paint Tools", items: ["Brush", "Rolller", "Santensils"] },
+      { name: "Enamels", items: ["Asian", "Nerolac", "JSW"] },
+      { name: "Primer", items: ["Wood Primer", "Metal Primer"] },
     ],
   },
   SANITARY: {
@@ -73,37 +73,33 @@ export default function NavigationMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState([]);
   const [expandedSubcategories, setExpandedSubcategories] = useState([]);
-  const [userType,setUserType] = useState(null);
+  const [userType, setUserType] = useState(null);
 
-  const checkAuthStatus = async()=>{
+  const checkAuthStatus = async () => {
     const token = localStorage.getItem("accessToken");
-    if(!token){
-      return;
-    }
+    if (!token) return;
 
     try {
       const response = await fetch("http://localhost:3000/api/v1/user/me", {
-          method: "GET",
-          headers: { 
-              Authorization: `Bearer ${token}`, // Send stored token
-          },
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      if (!response.ok) {
-          throw new Error("Invalid token");
-      }
+      if (!response.ok) throw new Error("Invalid token");
 
       const result = await response.json();
       setUserType(result.data.userType);
     } catch (error) {
-        console.log("User not logged in:", error);
-        localStorage.removeItem("accessToken"); // Remove invalid token
+      console.log("User not logged in:", error);
+      localStorage.removeItem("accessToken");
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     checkAuthStatus();
-  },[])
+  }, []);
 
   const toggleCategory = (category) => {
     setExpandedCategories((prev) =>
@@ -131,26 +127,40 @@ export default function NavigationMenu() {
 
           {/* Mobile Menu Drawer */}
           {mobileMenuOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-              <div className="w-[300px] h-full bg-white shadow-lg fixed left-0 top-0">
+            <div className="fixed inset-0 z-50">
+              {/* Background Overlay */}
+              <div className="fixed inset-0 bg-black/60 
+              onClick={() => setMobileMenuOpen(false)}"></div>
+
+
+
+              {/* Drawer */}
+              <div className="fixed left-0 top-0 h-full w-[300px] bg-white shadow-lg transform transition-transform duration-300 ease-in-out">
                 <div className="p-4 border-b flex justify-between items-center">
                   <span className="text-lg font-bold text-blue-600">Menu</span>
-                  <button className="text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                  <button
+                    className="text-gray-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     <X className="w-6 h-6" />
                   </button>
                 </div>
-                <div className="p-4 space-y-4">
-                  <a href="/" className="block text-lg font-bold text-blue-600" onClick={() => setMobileMenuOpen(false)}>
+                <div className="h-[calc(100vh-4rem)] overflow-y-auto p-4">
+                  <a
+                    href="/"
+                    className="block text-lg font-bold text-blue-600 mb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
                     HOME
                   </a>
                   {Object.entries(navigationItems).map(([category, { categories }]) => (
                     <div key={category} className="border-b pb-2">
                       <button
                         onClick={() => toggleCategory(category)}
-                        className="flex items-center justify-between w-full text-left py-2 font-medium"
+                        className="flex items-center justify-between w-full text-left py-2 font-medium text-gray-800"
                       >
-                        <span className="text-black">{category}</span>
-                        <ChevronRight className="w-4 h-4 text-black" />
+                        <span>{category}</span>
+                        <ChevronRight className="w-4 h-4" />
                       </button>
                       {expandedCategories.includes(category) && (
                         <div className="pl-4 space-y-2">
@@ -173,7 +183,7 @@ export default function NavigationMenu() {
                                     <li key={item}>
                                       <a
                                         href={`/${category.toLowerCase()}/${section.name.toLowerCase().replace(/ /g, "-")}`}
-                                        className="block py-1 text-sm text-gray-600"
+                                        className="block py-1 text-sm text-gray-600 hover:text-blue-600"
                                         onClick={() => setMobileMenuOpen(false)}
                                       >
                                         {item}
@@ -228,11 +238,14 @@ export default function NavigationMenu() {
               );
             })}
           </div>
-          {/* <div><Link to="/addProduct" className="hover:text-blue-200">ADD PRODUCT</Link></div> */}
-          {(userType === "admin") ? (
-            <div><Link to="/addProduct" className="hover:text-blue-200">ADD PRODUCT</Link></div>
-          ) : (
-            <div></div>
+
+          {/* Admin Link */}
+          {userType === "admin" && (
+            <div>
+              <Link to="/addProduct" className="hover:text-blue-200">
+                ADD PRODUCT
+              </Link>
+            </div>
           )}
         </div>
       </div>
