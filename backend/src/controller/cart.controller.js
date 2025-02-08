@@ -115,10 +115,10 @@ const getCart = AsyncHandler( async (req,res) => {
         throw new ApiError(400,"user not exist");
     }
 
-    const cart = await Cart.findById(user.cart);
+    const cart = await Cart.findById(user.cart).populate("items.product" , "_id name displayPicture category price netPrice");
 
     if(!cart){
-        throw new ApiError(400,"can not get cart");
+        throw new ApiResponse(200,{items : [], total : 0},"cart is empty");
     }
 
     res.status(200)

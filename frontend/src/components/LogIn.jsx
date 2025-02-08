@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -41,7 +42,10 @@ export default function LogIn() {
             setProfile(result.data.user);
             localStorage.setItem("accessToken", result.data.accessToken); 
             navigate("/");
-            window.location.reload();
+            toast.success("Logged in successfully");
+            setTimeout(() => {
+                window.location.reload();
+            },5000);
         } catch (error) {
             setError(error.message);
         }
@@ -78,7 +82,11 @@ export default function LogIn() {
         localStorage.removeItem("accessToken");
         setProfile(null);
         navigate("/");
-        window.location.reload();
+        toast.success("Logged out successfully");
+
+        setTimeout(() => {
+            window.location.reload();
+        },5000);
     };
 
     useEffect(() => {
