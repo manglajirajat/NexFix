@@ -22,36 +22,21 @@ const addInCart = AsyncHandler(async (req,res) => {
         price
     };
 
-    let cart = await Cart.findById(getUser.cart);
+    const cart = await Cart.findById(getUser.cart);
 
-    if (cart) {
-        const existingProduct = cart.items.find((item) => item.product.toString() === product);
+    const existingProduct = cart.items.find((item) => item.product.toString() === product);
 
-        if(existingProduct){
-            existingProduct.quantity += item.quantity;
-        }
-        else{
-            cart.items.push(item);
-        }
-
-        await cart.save();
-        await getUser.save();
-
-        res.status(201).json(new ApiResponse(201, cart, "Item added to existing cart"));
-        return;
+    if(existingProduct){
+        existingProduct.quantity += item.quantity;
+    }
+    else{
+        cart.items.push(item);
     }
 
-    cart = await Cart.create({ items: [item] });
+    await cart.save();
+    await getUser.save();
 
-    if (!cart) {
-        throw new ApiError(400, "Cannot generate cart");
-    }
-
-    getUser.cart = cart._id;
-    await getUser.save({validateBeforeSave : false});
-
-    res.status(201)
-    .json(new ApiResponse(201,cart,"added successfully"));
+    res.status(201).json(new ApiResponse(201, cart, "Item added to cart"));
 })
 
 const removeFromCart = AsyncHandler(async (req,res) => {

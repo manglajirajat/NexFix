@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -102,15 +103,15 @@ export default function LogIn() {
             {loading ? (
                 <p>Loading...</p>
             ) : !profile ? (
-                <div>
-                    <h2 className="m-2">Log in first</h2>
+                <div className="text-center">
+                    <h2 className="mb-2 ">Log In</h2>
                     {error && <p className="text-red-500">{error}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="m-2">
                             <label htmlFor="email">Enter email:</label>
                             <input
                                 type="email"
-                                className="px-2 rounded-full border-2 border-slate-200"
+                                className="ml-6 px-2 rounded-full border-2 border-slate-200"
                                 value={data.email}
                                 name="email"
                                 onChange={handleChange}
@@ -135,6 +136,8 @@ export default function LogIn() {
                         >
                             {loginLoading ? "Logging in..." : "Log in now"}
                         </button>
+
+                        <div>dont have account? <Link to="/createAccount" className="text-blue-600 hover:underline">create now</Link></div>
                     </form>
                 </div>
             ) : (
