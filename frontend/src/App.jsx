@@ -102,7 +102,7 @@ export default function App() {
         <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-0 lg:justify-between">
           <div className="flex items-center justify-between w-full lg:w-auto gap-4">
             <Link to="/" className="flex flex-col">
-              <div className="text-2xl lg:text-3xl font-bold text-blue-600">
+              <div className="text-2xl lg:text-3xl font-extrabold text-blue-600">
                 NexFix
               </div>
               <div className="text-xs lg:text-sm text-gray-500">
