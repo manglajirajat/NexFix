@@ -2,6 +2,7 @@ import {AsyncHandler} from "../utils/AsyncHandler.js";
 import {ApiResponse} from "../utils/ApiResponse.js";
 import {ApiError} from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
+import { Cart } from "../models/cart.model.js";
 
 const generateRefreshAndAccessToken = async (userId) => {
     try{
@@ -20,7 +21,7 @@ const generateRefreshAndAccessToken = async (userId) => {
 }
 
 const registerUser = AsyncHandler(async(req,res)=>{
-    const {name,email,password,contactNumber,userType} = req.body;
+    const {name,email,password,contactNumber} = req.body;
 
     if(!name || !email || !password || !contactNumber){
         throw new ApiError(400,"enter all fields");
@@ -41,7 +42,7 @@ const registerUser = AsyncHandler(async(req,res)=>{
         email,
         password,
         contactNumber,
-        userType,
+        cart : (await Cart.create({items : []}))._id,
     })
 
     if(!user){

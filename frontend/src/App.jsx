@@ -16,11 +16,13 @@ import AddProductForm from "./components/AddProductForm.jsx";
 
 // My account
 import LogIn from "./components/LogIn.jsx";
+import CreateAccount from "./components/CreateAccount.jsx";
 
 // Pages import
 import HomePage from "./components/pages/HomePage.jsx"
 import ProductList from "./components/pages/ProductList.jsx";
 import Product from "./components/pages/Product.jsx";
+import MyCart from "./components/pages/MyCart.jsx";
 
 // footer import
 import { Footer } from "./components/Footer.jsx";
@@ -102,7 +104,7 @@ export default function App() {
         <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-0 lg:justify-between">
           <div className="flex items-center justify-between w-full lg:w-auto gap-4">
             <Link to="/" className="flex flex-col">
-              <div className="text-2xl lg:text-3xl font-bold text-blue-600">
+              <div className="text-2xl lg:text-3xl font-extrabold text-blue-600">
                 NexFix
               </div>
               <div className="text-xs lg:text-sm text-gray-500">
@@ -125,10 +127,10 @@ export default function App() {
               <div className="relative">
                 <ShoppingCart className="w-5 h-5" />
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  1
+                  {profile ? profile.cart.items.length : 0}
                 </span>
               </div>
-              <span>₹0.00</span>
+              <span>{profile ? ("₹" + profile.cart.total) : ("₹0.00")}</span>
             </Link>
           </div>
         </div>
@@ -141,18 +143,19 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/addProduct" element={<AddProductForm />} />
         <Route path="/account" element={<LogIn />} />
+        <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/cart" element={<MyCart />} />
         <Route path="/:category" element={<ProductList />} />
         <Route path="/:category/:subCategory" element={<ProductList />} />
         <Route path="/contact" element={"hii"} />
         <Route path="/contact/customer-support" element={"ram ram"} />
-        <Route path="/hardware" element={<HardwarePage />} />
-
         {/* <Route path="/hardware" element={<ProductList category="Hardware" />} />
         <Route path="/hardware/hand-tools" element={<ProductList subCategory="Hand Tools" />} />
         <Route path="/hardware/safety-&-security" element={<ProductList subCategory="Safety %26 Security" />} />
         <Route path="/paint" element={<ProductList category="Paint" />} />
         <Route path="/paint/interior-paints" element={<ProductList subCategory="Interior" />} />
         <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} /> */}
+
         <Route path="/product/:productId" element={<Product />} />
       </Routes>
 

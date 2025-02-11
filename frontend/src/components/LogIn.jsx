@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography, Input, Button } from "@material-tailwind/react";
-import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -46,7 +44,10 @@ export default function LogIn() {
             setProfile(result.data.user);
             localStorage.setItem("accessToken", result.data.accessToken);
             navigate("/");
-            window.location.reload();
+            toast.success("Logged in successfully");
+            setTimeout(() => {
+                window.location.reload();
+            },5000);
         } catch (error) {
             setError(error.message);
         }
@@ -79,10 +80,11 @@ export default function LogIn() {
         }
     };
 
-    const logOut = () => {
-        localStorage.removeItem("accessToken"); // Clear the access token
-        setProfile(null); // Reset the profile state
-        navigate("/"); // Redirect to the login page
+    const handleLogout = () => {
+        localStorage.removeItem("accessToken");
+        setProfile(null);
+        navigate("/");
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -90,30 +92,19 @@ export default function LogIn() {
     }, []);
 
     return (
-        <section className="grid text-center h-screen items-center p-8">
-            {!profile ? (
+        <div className="p-4">
+            {loading ? (
+                <p>Loading...</p>
+            ) : !profile ? (
                 <div>
-                    <Typography variant="h3" color="blue-gray" className="mb-2">
-                        Sign In
-                    </Typography>
-                    <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-                        Enter your email and password to sign in
-                    </Typography>
-                    {error && <Typography color="red" className="mb-4">{error}</Typography>}
-                    <form onSubmit={handleSubmit} className="mx-auto max-w-[24rem] text-left">
-                        <div className="mb-6">
-                            <label htmlFor="email">
-                                <Typography variant="small" className="mb-2 block font-medium text-gray-900">
-                                    Your Email
-                                </Typography>
-                            </label>
-                            <Input
-                                id="email"
-                                color="gray"
-                                size="lg"
+                    <h2 className="m-2">Log in first</h2>
+                    {error && <p className="text-red-500">{error}</p>}
+                    <form onSubmit={handleSubmit}>
+                        <div className="m-2">
+                            <label htmlFor="email">Enter email:</label>
+                            <input
                                 type="email"
-                                name="email"
-                                placeholder="name@mail.com"
+                                className="px-2 rounded-full border-2 border-slate-200"
                                 value={data.email}
                                 onChange={handleChange}
                                 className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
@@ -140,9 +131,14 @@ export default function LogIn() {
                                 }
                             />
                         </div>
-                        <Button type="submit" color="gray" size="lg" className="mt-6" fullWidth disabled={loginLoading}>
-                            {loginLoading ? "Logging in..." : "Sign In"}
-                        </Button>
+
+                        <button
+                            className="rounded-full p-2 px-4 m-2 bg-blue-500 text-white disabled:opacity-50"
+                            type="submit"
+                            disabled={loginLoading}
+                        >
+                            {loginLoading ? "Logging in..." : "Log in now"}
+                        </button>
                     </form>
                 </div>
             ) : (

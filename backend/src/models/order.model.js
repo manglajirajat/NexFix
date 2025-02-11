@@ -18,13 +18,10 @@ const orderItemSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-    name : {
-        type : String,
-        required : true
-    },
-    contactNumber : {
-        type : String,
-        required : true
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
     items: [orderItemSchema],
     total: {
