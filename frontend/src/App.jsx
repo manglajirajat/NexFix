@@ -4,6 +4,7 @@ import { MapPin, User, ShoppingCart } from "lucide-react";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 
+
 // Navbar imports
 import AnnouncementBar from "./components/AnnouncementBar.jsx";
 import NavigationMenu from "./components/NavigationMenu.jsx";
@@ -25,6 +26,7 @@ import MyCart from "./components/pages/MyCart.jsx";
 
 // footer import
 import { Footer } from "./components/Footer.jsx";
+import { HardwarePage } from "./components/pages/HardwarePage.jsx";
 
 export default function App() {
   const [profile, setProfile] = useState(null);
@@ -147,6 +149,13 @@ export default function App() {
         <Route path="/:category/:subCategory" element={<ProductList />} />
         <Route path="/contact" element={"hii"} />
         <Route path="/contact/customer-support" element={"ram ram"} />
+        {/* <Route path="/hardware" element={<ProductList category="Hardware" />} />
+        <Route path="/hardware/hand-tools" element={<ProductList subCategory="Hand Tools" />} />
+        <Route path="/hardware/safety-&-security" element={<ProductList subCategory="Safety %26 Security" />} />
+        <Route path="/paint" element={<ProductList category="Paint" />} />
+        <Route path="/paint/interior-paints" element={<ProductList subCategory="Interior" />} />
+        <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} /> */}
+
         <Route path="/product/:productId" element={<Product />} />
       </Routes>
 

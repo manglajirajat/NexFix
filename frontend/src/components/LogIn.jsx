@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -9,11 +7,14 @@ export default function LogIn() {
     const [loading, setLoading] = useState(true);
     const [loginLoading, setLoginLoading] = useState(false);
     const [error, setError] = useState("");
+    const [passwordShown, setPasswordShown] = useState(false);
     const navigate = useNavigate();
+
+    const togglePasswordVisibility = () => setPasswordShown((cur) => !cur);
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
-        setError(""); // Clear error when user types
+        setError("");
     };
 
     const handleSubmit = async (e) => {
@@ -41,7 +42,7 @@ export default function LogIn() {
 
             const result = await response.json();
             setProfile(result.data.user);
-            localStorage.setItem("accessToken", result.data.accessToken); 
+            localStorage.setItem("accessToken", result.data.accessToken);
             navigate("/");
             toast.success("Logged in successfully");
             setTimeout(() => {
@@ -83,19 +84,11 @@ export default function LogIn() {
         localStorage.removeItem("accessToken");
         setProfile(null);
         navigate("/");
-        toast.success("Logged out successfully");
-
-        setTimeout(() => {
-            window.location.reload();
-        },5000);
+        window.location.reload();
     };
 
     useEffect(() => {
-        const check = async () =>{
-            await checkAuthStatus();
-        }
-
-        check();
+        checkAuthStatus();
     }, []);
 
     return (
@@ -103,29 +96,39 @@ export default function LogIn() {
             {loading ? (
                 <p>Loading...</p>
             ) : !profile ? (
-                <div className="text-center">
-                    <h2 className="mb-2 ">Log In</h2>
+                <div>
+                    <h2 className="m-2">Log in first</h2>
                     {error && <p className="text-red-500">{error}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="m-2">
                             <label htmlFor="email">Enter email:</label>
                             <input
                                 type="email"
-                                className="ml-6 px-2 rounded-full border-2 border-slate-200"
+                                className="px-2 rounded-full border-2 border-slate-200"
                                 value={data.email}
-                                name="email"
                                 onChange={handleChange}
+                                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
                             />
                         </div>
-
-                        <div className="m-2">
-                            <label htmlFor="password">Enter password:</label>
-                            <input
-                                type="password"
-                                className="px-2 rounded-full border-2 border-slate-200"
-                                value={data.password}
+                        <div className="mb-6">
+                            <label htmlFor="password">
+                                <Typography variant="small" className="mb-2 block font-medium text-gray-900">
+                                    Password
+                                </Typography>
+                            </label>
+                            <Input
+                                size="lg"
+                                placeholder="********"
+                                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
+                                type={passwordShown ? "text" : "password"}
                                 name="password"
+                                value={data.password}
                                 onChange={handleChange}
+                                icon={
+                                    <i onClick={togglePasswordVisibility}>
+                                        {passwordShown ? <EyeIcon className="h-5 w-5" /> : <EyeSlashIcon className="h-5 w-5" />}
+                                    </i>
+                                }
                             />
                         </div>
 
@@ -136,53 +139,30 @@ export default function LogIn() {
                         >
                             {loginLoading ? "Logging in..." : "Log in now"}
                         </button>
-
-                        <div>dont have account? <Link to="/createAccount" className="text-blue-600 hover:underline">create now</Link></div>
                     </form>
                 </div>
             ) : (
                 <div>
-                    <h2>My Profile</h2>
-                    <p>ID: {profile._id}</p>
-                    <p>Name: {profile.name}</p>
-                    <p>conact : {profile.contactNumber}</p>
-                    <p>email : {profile.email}</p>
-                    <div>
-                        {(profile.address != 0) ? (
-                            <div>
-                                <p>address : </p>
-                                {profile.address.map((address) => (
-                                    <p key={address._id}>
-                                        {address.street}, {address.city}, {address.state}, {address.postalCode} {(address.isDefault) ? "Default" : ""}
-                                    </p>
-                                ))}
-                            </div>
-                        ) : (
-                            <p>no address</p>
-                        ) }
-                    </div>
-                    <div>
-                        <p>cart id : {profile.cart._id}</p>
-                        {profile.cart.items.length != 0 ? (
-                            profile.cart.items.map((item) => (
-                                <div key={item._id}>
-                                    <p>product id : {item.product}</p>
-                                    <p>quantity : {item.quantity}</p>
-                                </div>
-                            ))
-                        ) : (
-                            <p>no items in cart</p>
-                        )}
-                    </div>
-                    <p>cart price : {profile.cart.total}</p>
-                    <button
-                        onClick={handleLogout}
-                        className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+                    <Typography variant="h4" color="blue-gray" className="mb-4">
+                        Profile Details
+                    </Typography>
+                    <Typography className="mb-2">
+                        <strong>Name:</strong> {profile.name}
+                    </Typography>
+                    <Typography className="mb-4">
+                        <strong>Email:</strong> {profile.email}
+                    </Typography>
+                    <Button
+                        color="red"
+                        size="lg"
+                        className="mt-4"
+                        fullWidth
+                        onClick={logOut} // Call the logOut function on button click
                     >
-                        Logout
-                    </button>
+                        Log Out
+                    </Button>
                 </div>
             )}
-        </div>
+        </section>
     );
 }
