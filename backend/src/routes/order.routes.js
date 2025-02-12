@@ -1,6 +1,6 @@
 import Router from "express";
 import { verifyJWT } from "../middleware/auth.middleware.js"
-import { getoOrders, placeOrderViaCart } from "../controller/order.controller.js";
+import { getOrders, placeOrderViaCart } from "../controller/order.controller.js";
 
 const router = Router();
 
@@ -11,7 +11,7 @@ router.route("/placeOrderViaCart").post(
 
 router.route("/getOrders").get(
     verifyJWT,
-    getoOrders
+    getOrders
 )
 
 export default router;
