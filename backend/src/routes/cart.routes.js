@@ -1,6 +1,6 @@
 import Router from "express";
 import { verifyJWT } from "../middleware/auth.middleware.js";
-import { addInCart,decresaQuantity,getCart,removeFromCart } from "../controller/cart.controller.js";
+import { addInCart,decresaQuantity,getCart,getCartViaId,removeFromCart } from "../controller/cart.controller.js";
 
 const router = Router();
 
@@ -22,6 +22,11 @@ router.route("/decreseQuantity").post(
 router.route("/getCart").get(
     verifyJWT,
     getCart
+)
+
+router.route("/getCartViaId").post(
+    verifyJWT,
+    getCartViaId
 )
 
 export default router;

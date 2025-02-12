@@ -23,10 +23,10 @@ import HomePage from "./components/pages/HomePage.jsx"
 import ProductList from "./components/pages/ProductList.jsx";
 import Product from "./components/pages/Product.jsx";
 import MyCart from "./components/pages/MyCart.jsx";
+import CheckOut from "./components/pages/CheckOut.jsx";
 
 // footer import
 import { Footer } from "./components/Footer.jsx";
-import { HardwarePage } from "./components/pages/HardwarePage.jsx";
 
 export default function App() {
   const [profile, setProfile] = useState(null);
@@ -141,22 +141,22 @@ export default function App() {
       
       <Routes>
         <Route path="/" element={<HomePage />} />
+
         <Route path="/addProduct" element={<AddProductForm />} />
+
         <Route path="/account" element={<LogIn />} />
         <Route path="/createAccount" element={<CreateAccount />} />
+
         <Route path="/cart" element={<MyCart />} />
         <Route path="/:category" element={<ProductList />} />
         <Route path="/:category/:subCategory" element={<ProductList />} />
         <Route path="/contact" element={"hii"} />
         <Route path="/contact/customer-support" element={"ram ram"} />
-        {/* <Route path="/hardware" element={<ProductList category="Hardware" />} />
-        <Route path="/hardware/hand-tools" element={<ProductList subCategory="Hand Tools" />} />
-        <Route path="/hardware/safety-&-security" element={<ProductList subCategory="Safety %26 Security" />} />
-        <Route path="/paint" element={<ProductList category="Paint" />} />
-        <Route path="/paint/interior-paints" element={<ProductList subCategory="Interior" />} />
-        <Route path="/paint/enamels" element={<ProductList subCategory="Enamel" />} /> */}
+        <Route path="/checkout" element={<CheckOut />} />
 
         <Route path="/product/:productId" element={<Product />} />
+
+        <Route path="/checkout/:cartId" element={<CheckOut />} />
       </Routes>
 
       <Footer />

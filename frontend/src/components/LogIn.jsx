@@ -124,7 +124,7 @@ export default function LogIn() {
                                 value={data.password}
                                 onChange={handleChange}
                             />
-                            <i onClick={togglePasswordVisibility}>
+                            <i onClick={togglePasswordVisibility} className="cursor-pointer">
                                 {passwordShown ? "👁" : "🙈"}
                             </i>
                         </div>

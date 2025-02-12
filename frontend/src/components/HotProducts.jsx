@@ -60,7 +60,7 @@ export function HotProducts() {
 
       setTimeout(() =>{
         window.location.reload();
-      },5000);
+      },2000);
     } catch (error) {
       console.log(error);
     }
