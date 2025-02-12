@@ -136,7 +136,7 @@ export default function App() {
         </div>
       </header>
 
-      <ToastContainer />
+      <ToastContainer  autoClose={2000} position="top-center" pauseOnFocusLoss={false} pauseOnHover={false}/>
       <NavigationMenu />
       
       <Routes>

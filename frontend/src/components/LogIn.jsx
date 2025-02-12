@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Link  } from "react-router-dom";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -47,7 +49,7 @@ export default function LogIn() {
             toast.success("Logged in successfully");
             setTimeout(() => {
                 window.location.reload();
-            },5000);
+            }, 2000);
         } catch (error) {
             setError(error.message);
         }
@@ -84,7 +86,10 @@ export default function LogIn() {
         localStorage.removeItem("accessToken");
         setProfile(null);
         navigate("/");
-        window.location.reload();
+        toast.success("Logged out successfully");
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
     };
 
     useEffect(() => {
@@ -104,32 +109,24 @@ export default function LogIn() {
                             <label htmlFor="email">Enter email:</label>
                             <input
                                 type="email"
-                                className="px-2 rounded-full border-2 border-slate-200"
+                                name="email"
                                 value={data.email}
                                 onChange={handleChange}
-                                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
+                                className="w-full border-2 border-slate-300 rounded-md"
                             />
                         </div>
                         <div className="mb-6">
-                            <label htmlFor="password">
-                                <Typography variant="small" className="mb-2 block font-medium text-gray-900">
-                                    Password
-                                </Typography>
-                            </label>
-                            <Input
-                                size="lg"
-                                placeholder="********"
-                                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
+                            <label htmlFor="password">Password</label>
+                            <input
+                                className="w-full border-2 border-slate-300 rounded-md"s
                                 type={passwordShown ? "text" : "password"}
                                 name="password"
                                 value={data.password}
                                 onChange={handleChange}
-                                icon={
-                                    <i onClick={togglePasswordVisibility}>
-                                        {passwordShown ? <EyeIcon className="h-5 w-5" /> : <EyeSlashIcon className="h-5 w-5" />}
-                                    </i>
-                                }
                             />
+                            <i onClick={togglePasswordVisibility}>
+                                {passwordShown ? "👁" : "🙈"}
+                            </i>
                         </div>
 
                         <button
@@ -140,29 +137,25 @@ export default function LogIn() {
                             {loginLoading ? "Logging in..." : "Log in now"}
                         </button>
                     </form>
+                    <p>dont have account? <Link to='/createAccount' className="text-blue-500 hover:underline">Create now !</Link></p>
                 </div>
             ) : (
                 <div>
-                    <Typography variant="h4" color="blue-gray" className="mb-4">
-                        Profile Details
-                    </Typography>
-                    <Typography className="mb-2">
+                    <h4 className="mb-4">Profile Details</h4>
+                    <p className="mb-2">
                         <strong>Name:</strong> {profile.name}
-                    </Typography>
-                    <Typography className="mb-4">
+                    </p>
+                    <p className="mb-4">
                         <strong>Email:</strong> {profile.email}
-                    </Typography>
-                    <Button
-                        color="red"
-                        size="lg"
-                        className="mt-4"
-                        fullWidth
-                        onClick={logOut} // Call the logOut function on button click
+                    </p>
+                    <button
+                        className="mt-4 bg-red-500 text-white p-2 rounded-full"
+                        onClick={handleLogout}
                     >
                         Log Out
-                    </Button>
+                    </button>
                 </div>
             )}
-        </section>
+        </div>
     );
 }

@@ -116,7 +116,7 @@ const logOut = AsyncHandler(async (req,res) => {
 const getLoggedInUser = AsyncHandler(async (req,res) => {
     const user = await User.findById(req.user._id)
     .select("-password -refreshToken")
-    .populate("address cart orders");
+    .populate("address cart");
 
     if(!user){
         throw new ApiError(404,"user not found");
