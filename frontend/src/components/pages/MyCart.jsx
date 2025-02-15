@@ -108,7 +108,7 @@ export default function MyCart() {
             </div>
 
             <p className="mt-6 text-lg font-semibold">Total: ₹{cart.total}</p>
-            <button className="bg-yellow-400 font-bold px-2 py-1 rounded-md hover:bg-yellow-500">Buy Now</button>
+            <Link to={`/checkout/${cart._id}`} className="bg-yellow-400 font-bold px-2 py-1 rounded-md hover:bg-yellow-500">Buy Now</Link>
         </div>
     );
 }

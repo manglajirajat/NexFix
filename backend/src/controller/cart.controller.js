@@ -110,4 +110,17 @@ const getCart = AsyncHandler( async (req,res) => {
     .json(new ApiResponse(200,cart,"users cart"));
 })
 
-export {addInCart,removeFromCart,decresaQuantity,getCart};
+const getCartViaId = AsyncHandler( async(req,res) => {
+    const {cartId} = req.body;
+
+    const cart = await Cart.findById(cartId).populate("items.product", "_id name displayPicture category price netPrice");
+
+    if(!cart){
+        throw new ApiError(400,"failed to get cart");
+    }
+
+    res.status(200)
+    .json(new ApiResponse(200,cart,"users cart"));    
+})
+
+export {addInCart,removeFromCart,decresaQuantity,getCart,getCartViaId};
