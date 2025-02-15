@@ -35,7 +35,7 @@ export function FeaturedProducts() {
   return (
     <div className="container mx-auto px-4 py-12">
       <h2 className="text-2xl lg:text-3xl font-bold mb-8">Featured Products</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <Link key={product.id} to={`/product/${product.id}`} className="group">
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
