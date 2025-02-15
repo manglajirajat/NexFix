@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
+import { Typography, Input, Button } from "@material-tailwind/react";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -47,7 +50,7 @@ export default function LogIn() {
             toast.success("Logged in successfully");
             setTimeout(() => {
                 window.location.reload();
-            },5000);
+            }, 5000);
         } catch (error) {
             setError(error.message);
         }
@@ -104,10 +107,11 @@ export default function LogIn() {
                             <label htmlFor="email">Enter email:</label>
                             <input
                                 type="email"
-                                className="px-2 rounded-full border-2 border-slate-200"
+                                name="email"
+                                className="w-full px-2 py-1 rounded-full border-2 border-slate-200 focus:border-blue-500 focus:outline-none"
                                 value={data.email}
                                 onChange={handleChange}
-                                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
+                                required
                             />
                         </div>
                         <div className="mb-6">
@@ -125,13 +129,12 @@ export default function LogIn() {
                                 value={data.password}
                                 onChange={handleChange}
                                 icon={
-                                    <i onClick={togglePasswordVisibility}>
+                                    <i onClick={togglePasswordVisibility} className="cursor-pointer">
                                         {passwordShown ? <EyeIcon className="h-5 w-5" /> : <EyeSlashIcon className="h-5 w-5" />}
                                     </i>
                                 }
                             />
                         </div>
-
                         <button
                             className="rounded-full p-2 px-4 m-2 bg-blue-500 text-white disabled:opacity-50"
                             type="submit"
@@ -152,17 +155,11 @@ export default function LogIn() {
                     <Typography className="mb-4">
                         <strong>Email:</strong> {profile.email}
                     </Typography>
-                    <Button
-                        color="red"
-                        size="lg"
-                        className="mt-4"
-                        fullWidth
-                        onClick={logOut} // Call the logOut function on button click
-                    >
+                    <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
                         Log Out
                     </Button>
                 </div>
             )}
-        </section>
+        </div>
     );
 }
