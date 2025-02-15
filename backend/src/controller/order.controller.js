@@ -24,9 +24,8 @@ const placeOrderViaCart = AsyncHandler(async (req, res) => {
         throw new ApiError(400, "Please add a default shipping address");
     }
 
-    let paymentStatus;
-    if (paymentMethod !== "cash_on_delivery") {
-        paymentStatus = "completed";
+    if (paymentMethod === "cash_on_delivery") {
+        orderStatus = "processing";
     }
 
     const order = await Order.create({
@@ -35,13 +34,11 @@ const placeOrderViaCart = AsyncHandler(async (req, res) => {
         total: cart.total,
         shippingAddress: shippingAddress._id,
         paymentMethod,
-        paymentStatus,
-        orderStatus: "processing"
-        });
+    });
 
-        cart.items = [];
-        cart.total = 0;
-        await cart.save();
+        // cart.items = [];
+        // cart.total = 0;
+        // await cart.save();
 
         return res.status(201).json(new ApiResponse(201, order, "Order placed successfully"));
 });
@@ -58,3 +55,5 @@ const getOrders = AsyncHandler(async (req, res) => {
 });
 
 export { placeOrderViaCart, getOrders };
+
+    

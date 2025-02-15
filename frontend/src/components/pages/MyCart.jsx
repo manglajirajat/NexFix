@@ -51,6 +51,79 @@ export default function MyCart() {
         }
     }  
 
+    const buyNow = async () => {
+        try {
+            // Place Order
+            const response = await fetch("http://localhost:3000/api/v1/order/placeOrderViaCart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+                body: JSON.stringify({ paymentMethod: "online" }),
+            });
+    
+            if (!response.ok) {
+                throw new Error("An error occurred while placing the order");
+            }
+    
+            const result = await response.json();
+            const order = result.data;
+    
+            // Fetch User Details
+            const getUser = await fetch("http://localhost:3000/api/v1/user/me", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                }
+            });
+    
+            if (!getUser.ok) {
+                throw new Error("An error occurred while fetching user details");
+            }
+    
+            const user = (await getUser.json()).data;
+    
+            // Generate Payment Link
+            const payementResponse = await fetch("http://localhost:3000/api/v1/payment/generate-payment-link", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+                body: JSON.stringify({
+                    link_id: order._id,
+                    link_amount: order.total,
+                    link_currency: "INR",
+                    link_purpose: "placing order",
+                    customer_details: {
+                        customer_phone: user.contactNumber,
+                        customer_email: "rajatmangla0203@gmail.com",
+                        customer_name: user.name
+                    },
+                    link_notify: { send_sms: true, send_email: true }
+                })
+            });
+            
+    
+            if (!payementResponse.ok) {
+                throw new Error("An error occurred while generating payment link");
+            }
+    
+            const paymentResult = await payementResponse.json();
+            redirectToPayment(paymentResult.link_url);
+    
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message);
+        }
+    };    
+
+    const redirectToPayment = (link) => {
+        window.open(link, "_blank");
+    }
+
     useEffect(() => {
         fetchCart();
     }, []);
@@ -92,7 +165,7 @@ export default function MyCart() {
                                     </Link>
                                     <div>
                                         <span>Quantity : </span>
-                                        <select name="quantity" id="" value={item.quantity}>
+                                        <select name="quantity" id="" value={item.quantity} onChange={()=>{"Change Quantity"}}>
                                             {[...Array(10).keys()].map((num) => (
                                                 <option key={num} value={num + 1}>
                                                     {num + 1}
@@ -108,7 +181,32 @@ export default function MyCart() {
             </div>
 
             <p className="mt-6 text-lg font-semibold">Total: ₹{cart.total}</p>
-            <Link to={`/checkout/${cart._id}`} className="bg-yellow-400 font-bold px-2 py-1 rounded-md hover:bg-yellow-500">Buy Now</Link>
+            <button className="bg-yellow-400 font-bold px-2 py-1 rounded-md hover:bg-yellow-500" onClick={buyNow}>Buy Now</button>
         </div>
     );
 }
+
+
+// Check Payment Status
+            // const checkPaymentStatus = {
+            //     method: 'GET',
+            //     headers: {
+            //         'x-client-id': 'TEST10480256ed35a6380df1066e386d65208401',
+            //         'x-client-secret': 'cfsk_ma_test_e94dbc2f14d6e0b297dc6fcd383f0f12_eeeac491',
+            //         'x-api-version': '2025-01-01'
+            //     }
+            // };
+    
+            // const paymentStatus = await fetch(`https://sandbox.cashfree.com/pg/links/${order._id}`, checkPaymentStatus);
+            
+            // if (!paymentStatus.ok) {
+            //     throw new Error("An error occurred while checking payment status");
+            // }
+    
+            // const paymentStatusResult = await paymentStatus.json();
+    
+            // if (paymentStatusResult.status === "PAID") {
+            //     toast.success("Order placed successfully!");
+            // } else {
+            //     toast.error("Payment failed. Please try again.");
+            // }
