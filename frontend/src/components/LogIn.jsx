@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import { Typography, Input, Button } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -50,7 +51,7 @@ export default function LogIn() {
             toast.success("Logged in successfully");
             setTimeout(() => {
                 window.location.reload();
-            }, 5000);
+            }, 2000);
         } catch (error) {
             setError(error.message);
         }
@@ -143,6 +144,8 @@ export default function LogIn() {
                             {loginLoading ? "Logging in..." : "Log in now"}
                         </button>
                     </form>
+
+                    <div>dont have account <Link to={"/createAccount"} className="text-blue-500 hover:underline">Create Now!</Link></div>
                 </div>
             ) : (
                 <div>
