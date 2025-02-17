@@ -158,6 +158,11 @@ export default function LogIn() {
                     <Typography className="mb-4">
                         <strong>Email:</strong> {profile.email}
                     </Typography>
+                    <p>address :
+                        {profile.address && profile.address.map((address) => (
+                            <p>{address.street}, {address.city} {address.state}-{address.postalCode}</p>
+                        ))}
+                    </p>
                     <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
                         Log Out
                     </Button>

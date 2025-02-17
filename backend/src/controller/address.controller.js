@@ -7,7 +7,7 @@ import { Address } from "../models/address.model.js";
 const addAdress = AsyncHandler(async (req,res) => {
     const {street,city,state,postalCode,isDefault} = req.body;
 
-    if(!street,!city,!state,!postalCode){
+    if(!street || !city || !state || !postalCode){
         throw new ApiError(400,"all fields are required");
     }
     const user = await User.findById(req.user._id).populate("address");
@@ -17,6 +17,7 @@ const addAdress = AsyncHandler(async (req,res) => {
     }
 
     const existingAddress = await Address.findOne({
+        user : user._id,
         street,
         city,
         state,
@@ -27,19 +28,12 @@ const addAdress = AsyncHandler(async (req,res) => {
         throw new ApiError(400, "same address already exists for this user");
     }
 
-    if (isDefault) {
-        await Address.updateMany(
-            { user: user._id, isDefault: true },
-            { isDefault: false }
-        );
-    }
-
     const address = await Address.create({
+        user : user._id,
         street,
         city,
         state,
         postalCode,
-        isDefault
     })
 
     if(!address){
@@ -51,7 +45,7 @@ const addAdress = AsyncHandler(async (req,res) => {
     await user.save({validateBeforeSave : false})
 
     res.status(201).json(new ApiResponse(201,user.address,"address added successfully"));
-})
+});
 
 const deleteAddress = AsyncHandler(async (req,res) => {
     const user = await User.findById(req.user._id);
@@ -66,7 +60,9 @@ const deleteAddress = AsyncHandler(async (req,res) => {
         throw new ApiError(400,"address to delete is required");
     }
 
-    const addressExist = user.address.find((address) => address.toString() === addressToDelete);
+    const addressExist = await Address.findOne({
+        $and: [{ user: user._id }, { _id: addressToDelete }] 
+    })
 
     if(!addressExist){
         throw new ApiError(400,"address not found");
@@ -80,7 +76,7 @@ const deleteAddress = AsyncHandler(async (req,res) => {
     await user.save({validateBeforeSave : false});
 
     res.status(204)
-    .json(new ApiResponse(204,user,"address deleted successfully"));
+    .json(new ApiResponse(204,{},"address deleted successfully"));
 })
 
 const getAddress = AsyncHandler(async (req,res) => {
