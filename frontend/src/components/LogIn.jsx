@@ -162,6 +162,7 @@ export default function LogIn() {
                         {profile.address && profile.address.map((address) => (
                             <p>{address.street}, {address.city} {address.state}-{address.postalCode}</p>
                         ))}
+                        <a href="" className="text-blue-500 hover:underline">add address</a>
                     </p>
                     <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
                         Log Out

@@ -73,13 +73,13 @@ export default function MyCart() {
     };
 
     const buyNow = async () => {
-        if (!address) {
-            toast.error("Please select a shipping address.");
+        if(cart.items.length == 0){
+            toast.error("Cart is empty");
             return;
         }
 
-        if(cart.items.length == 0){
-            toast.error("Cart is empty");
+        if (!address) {
+            toast.error("Please select a shipping address.");
             return;
         }
 
@@ -207,6 +207,7 @@ export default function MyCart() {
                             <label htmlFor={addr._id}>{addr.street}, {addr.city} {addr.state}-{addr.postalCode}</label>
                         </div>
                     ))}
+                    <a href="" className="text-blue-500 hover:underline">add address</a>
                 </div>
 
                 <div className="">
