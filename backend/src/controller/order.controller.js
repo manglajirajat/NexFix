@@ -30,11 +30,11 @@ const placeOrderViaCart = AsyncHandler(async (req, res) => {
         paymentMethod,
     });
 
-        // cart.items = [];
-        // cart.total = 0;
-        // await cart.save();
+    cart.items = [];
+    cart.total = 0;
+    await cart.save();
 
-        return res.status(201).json(new ApiResponse(201, order, "Order placed successfully"));
+    return res.status(201).json(new ApiResponse(201, order, "Order placed successfully"));
 });
 
 const getOrders = AsyncHandler(async (req, res) => {
