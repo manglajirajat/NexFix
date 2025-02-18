@@ -24,46 +24,46 @@ const navigationItems = {
   },
   SANITARY: {
     categories: [
-      { name: "Bathroom Fixtures", items: [] },
-      { name: "Toilets & Bidets", items: [] },
-      { name: "Bathroom Accessories", items: [] },
-      { name: "Plumbing", items: [] },
-      { name: "Solvent", items: [] },
+      { name: "Bathroom Fixtures", items: [" "] },
+      { name: "Toilets & Bidets", items: [" "] },
+      { name: "Bathroom Accessories", items: [" "] },
+      { name: "Plumbing", items: [" "] },
+      { name: "Solvent", items: [" "] },
     ],
   },
   "POWER TOOLS": {
     categories: [
-      { name: "Drilling Tools", items: [] },
-      { name: "Cutting Tools", items: [] },
-      { name: "Grinding Tools", items: [] },
-      { name: "Cordless Tools", items: [] },
+      { name: "Drilling Tools", items: [" "] },
+      { name: "Cutting Tools", items: [" "] },
+      { name: "Grinding Tools", items: [" "] },
+      { name: "Cordless Tools", items: [" "] },
     ],
   },
   "BUYING GUIDE": {
     categories: [
-      { name: "Tool Selection Guides", items: [] },
-      { name: "Paint Selection", items: [] },
-      { name: "Installation Guides", items: [] },
-      { name: "Maintenance Tips", items: [] },
+      { name: "Tool Selection Guides", items: [" "] },
+      { name: "Paint Selection", items: [" "] },
+      { name: "Installation Guides", items: [" "] },
+      { name: "Maintenance Tips", items: [" "] },
     ],
   },
   CONTACT: {
     categories: [
       {
         name: "Customer Support",
-        items: ["Help Center", "FAQs", "Return Policy", "Shipping Information"],
+        items: [" "],
       },
       {
         name: "Business Enquiries",
-        items: ["Bulk Orders", "Corporate Sales", "Dealer Network", "Franchising"],
+        items: [" "],
       },
       {
         name: "Technical Support",
-        items: ["Product Support", "Installation Support", "Warranty Claims", "Spare Parts"],
+        items: [" "],
       },
       {
         name: "Locations",
-        items: ["Store Locator", "Service Centers", "Warehouses", "Corporate Office"],
+        items: [" "],
       },
     ],
   },

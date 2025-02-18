@@ -94,7 +94,7 @@ const HeroCarousel = () => {
         className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 flex items-center justify-center shadow-lg hover:bg-white transition-colors"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="w-6 h-6 text-gray-800" />
+        <ChevronLeft className="w-6 h-6 text-gray-800 " />
       </button>
       <button
         onClick={nextSlide}
