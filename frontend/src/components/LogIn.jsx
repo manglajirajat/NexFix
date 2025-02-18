@@ -67,7 +67,7 @@ export default function LogIn() {
 
         try {
             const response = await fetch("http://localhost:3000/api/v1/user/me", {
-                method: "POST",
+                method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -89,7 +89,10 @@ export default function LogIn() {
         localStorage.removeItem("accessToken");
         setProfile(null);
         navigate("/");
-        window.location.reload();
+        toast.success("Logged out successfully");
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
     };
 
     useEffect(() => {
@@ -149,7 +152,7 @@ export default function LogIn() {
                         </p>
                     </form>
 
-                    <div>dont have account <Link to={"/createAccount"} className="text-blue-500 hover:underline">Create Now!</Link></div>
+                    <div>dont have account <Link to={"/createAccount"} className="text-white hover:underline">Create Now!</Link></div>
                 </div>
             </div>
         ) : (
@@ -163,12 +166,13 @@ export default function LogIn() {
                 <span className="mb-4">
                     <strong>Email:</strong> {profile.email}
                 </span>
-                    <p>address :
+                    <div>
+                        address :
                         {profile.address && profile.address.map((address) => (
-                            <p>{address.street}, {address.city} {address.state}-{address.postalCode}</p>
+                            <address key={address._id}>{address.street}, {address.city} {address.state}-{address.postalCode}</address>
                         ))}
-                        <a href="" className="text-blue-500 hover:underline">add address</a>
-                    </p>
+                        <Link to={"/addAddress"} className="text-blue-500 hover:underline">add address</Link>
+                    </div>
                 <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
                     Log Out
                 </Button>

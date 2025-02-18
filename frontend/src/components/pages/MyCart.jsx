@@ -207,7 +207,7 @@ export default function MyCart() {
                             <label htmlFor={addr._id}>{addr.street}, {addr.city} {addr.state}-{addr.postalCode}</label>
                         </div>
                     ))}
-                    <a href="" className="text-blue-500 hover:underline">add address</a>
+                    <Link to={"/addAddress"} className="text-blue-500 hover:underline">add address</Link>
                 </div>
 
                 <div className="">

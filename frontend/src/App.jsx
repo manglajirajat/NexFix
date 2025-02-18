@@ -13,6 +13,7 @@ import AddProductForm from "./components/AddProductForm.jsx";
 // My account
 import LogIn from "./components/LogIn.jsx";
 import CreateAccount from "./components/CreateAccount.jsx";
+import AddAddressForm from "./components/AddAddressForm.jsx";
 
 // Pages import
 import HomePage from "./components/pages/HomePage.jsx"
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/addProduct" element={<AddProductForm />} />
         <Route path="/account" element={<LogIn />} />
+        <Route path="/addAddress" element={<AddAddressForm />} />
         <Route path="/createAccount" element={<CreateAccount />} />
         <Route path="/cart" element={<MyCart />} />
         <Route path="/:category" element={<ProductList />} />
