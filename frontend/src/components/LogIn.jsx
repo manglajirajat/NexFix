@@ -33,6 +33,7 @@ export default function LogIn() {
 
     const getProfile = async () => {
         try {
+            console.log(data);
             const response = await fetch("http://localhost:3000/api/v1/user/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -65,7 +66,7 @@ export default function LogIn() {
 
         try {
             const response = await fetch("http://localhost:3000/api/v1/user/me", {
-                method: "GET",
+                method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -95,71 +96,74 @@ export default function LogIn() {
     }, []);
 
     return (
-        <div className="p-4">
-            {loading ? (
-                <p>Loading...</p>
-            ) : !profile ? (
-                <div>
-                    <h2 className="m-2">Log in first</h2>
-                    {error && <p className="text-red-500">{error}</p>}
+        loading ? (
+            <p>Loading...</p>
+        ) : !profile ? (
+            <div className='flex'>
+                <div className='w-[60%] bg-amber-50'>
+                    <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?t=st=1739805063~exp=1739808663~hmac=4a51e84bac1ddfd9c09e341d562a854e329754f7d6883163f2c0c2b2de11c9ef&w=1060" alt="Login Image Not Found" className='w-full h-screen' />
+                </div>
+
+                <div className='w-[40%] bg-blue-500 px-32 py-40'>
+                    <h1 className='font-mono font-extrabold text-amber-50 text-4xl flex text-nowrap'>
+                        <EyeIcon className='w-12 h-12 text-amber-600'/>
+                        Login to karle 😭
+                    </h1>
+                    <p className='my-2'>
+                        Account nahi bana rakha pehle se ? <a className="hover:text-blue-50 underline" href="">Register</a>
+                        {error && <p className="text-red-500">{error}</p>}
+                    </p>
+
                     <form onSubmit={handleSubmit}>
-                        <div className="m-2">
-                            <label htmlFor="email">Enter email:</label>
-                            <input
-                                type="email"
-                                name="email"
-                                className="w-full px-2 py-1 rounded-full border-2 border-slate-200 focus:border-blue-500 focus:outline-none"
-                                value={data.email}
-                                onChange={handleChange}
-                                required
-                            />
+
+                        <div className='py-1.5'>
+                            <label htmlFor="Email" className='text-amber-800 text'>Email</label>
+                            <input type="email" name="email" placeholder='Email daal bhadwe' value={data.email} onChange={handleChange} required className='w-full border py-1.5 px-2 rounded-lg '/>
                         </div>
-                        <div className="mb-6">
-                            <label htmlFor="password">
-                                <Typography variant="small" className="mb-2 block font-medium text-gray-900">
-                                    Password
-                                </Typography>
-                            </label>
-                            <Input
-                                size="lg"
-                                placeholder="********"
-                                className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
-                                type={passwordShown ? "text" : "password"}
-                                name="password"
-                                value={data.password}
-                                onChange={handleChange}
-                                icon={
-                                    <i onClick={togglePasswordVisibility} className="cursor-pointer">
-                                        {passwordShown ? <EyeIcon className="h-5 w-5" /> : <EyeSlashIcon className="h-5 w-5" />}
-                                    </i>
-                                }
-                            />
+
+                        <div className='my-2'>
+                            <label htmlFor="Password" className='text-amber-800 text'>Password</label>
+                            <div className="relative">
+                                <input 
+                                    size="lg" 
+                                    type={passwordShown ? "text" : "password"} 
+                                    value={data.password} 
+                                    name="password" 
+                                    onChange={handleChange} 
+                                    placeholder='password daal' 
+                                    className='w-full border py-1.5 px-2 rounded-lg'
+                                />
+                                <i onClick={togglePasswordVisibility} className='absolute right-2 top-3 cursor-pointer'>
+                                    {passwordShown ? <EyeIcon className='h-5 w-5' /> : <EyeSlashIcon className='h-5 w-5' />}
+                                </i>
+                            </div>
                         </div>
-                        <button
-                            className="rounded-full p-2 px-4 m-2 bg-blue-500 text-white disabled:opacity-50"
-                            type="submit"
-                            disabled={loginLoading}
-                        >
-                            {loginLoading ? "Logging in..." : "Log in now"}
+    
+                        <button className='mt-2 w-20 border border-gray-600 rounded-lg hover:bg-blue-700 transition duration-300 px-1.5 py-1.5' type="submit">
+                            <span className='text-white'>LogIn</span>
                         </button>
+
+                        <p>
+                            <a href="" className='text-xs underline hover:text-white'>Forgot Password ?</a>
+                        </p>
                     </form>
                 </div>
-            ) : (
-                <div>
-                    <Typography variant="h4" color="blue-gray" className="mb-4">
-                        Profile Details
-                    </Typography>
-                    <Typography className="mb-2">
-                        <strong>Name:</strong> {profile.name}
-                    </Typography>
-                    <Typography className="mb-4">
-                        <strong>Email:</strong> {profile.email}
-                    </Typography>
-                    <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
-                        Log Out
-                    </Button>
-                </div>
-            )}
-        </div>
+            </div>
+        ) : (
+            <div>
+                <span color="blue-gray" className="mb-4">
+                    Profile Details
+                </span>
+                <span className="mb-2">
+                    <strong>Name: </strong> {profile.name}
+                </span>
+                <span className="mb-4">
+                    <strong>Email:</strong> {profile.email}
+                </span>
+                <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
+                    Log Out
+                </Button>
+            </div>
+        )
     );
 }
