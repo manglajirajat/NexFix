@@ -7,30 +7,29 @@ export function HotProducts() {
   const [cartItems, setCartItems] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const getProducts = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/v1/product/getfeatured");
-      if (!response.ok) throw new Error("Error occurred while fetching data");
-      const result = await response.json();
-      setProducts(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
   useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/v1/product/getfeatured");
+        if (!response.ok) throw new Error("Error occurred while fetching data");
+        const result = await response.json();
+        setProducts(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getProducts();
   }, []);
-  
+
   const handleChange = (e, product, price) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setCartItems((prev) => ({
       ...prev,
       [product]: {
-        ...prev[product], 
-        product: product, 
+        ...prev[product],
+        product: product,
         quantity: parseInt(value, 10),
-        price: price
+        price: price,
       },
     }));
   };
@@ -44,23 +43,22 @@ export function HotProducts() {
     setLoading(true);
 
     try {
-      const responce = await fetch("http://localhost:3000/api/v1/cart/addInCart",{
+      const response = await fetch("http://localhost:3000/api/v1/cart/addInCart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify(item),
-      })
+      });
 
-      if (!responce.ok) throw new Error("Error occurred while adding to cart");
+      if (!response.ok) throw new Error("Error occurred while adding to cart");
       setLoading(false);
-      
       toast.success("Product added to cart successfully");
 
-      setTimeout(() =>{
+      setTimeout(() => {
         window.location.reload();
-      },2000);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
@@ -99,14 +97,19 @@ export function HotProducts() {
                 </Link>
                 <div className="flex justify-between items-center mt-2">
                   <button 
-                  onClick={() => addToCart(product._id)} 
-                  className="bg-yellow-400 text-black px-2 py-1 rounded-md font-bold hover:bg-yellow-500 transition-colors disabled:opacity-50" 
-                  disabled={loading}>
+                    onClick={() => addToCart(product._id)} 
+                    className="bg-yellow-400 text-black px-2 py-1 rounded-md font-bold hover:bg-yellow-500 transition-colors disabled:opacity-50" 
+                    disabled={loading}
+                  >
                     Add to Cart
                   </button>
                   <div>
                     Quantity:&nbsp;
-                    <select name="quantity" value={cartItems[product._id]?.quantity || 0} onChange={(e) => handleChange(e, product._id,product.netPrice)}>
+                    <select 
+                      name="quantity" 
+                      value={cartItems[product._id]?.quantity || 0} 
+                      onChange={(e) => handleChange(e, product._id, product.netPrice)}
+                    >
                       <option value="0">0</option>
                       {[...Array(10).keys()].map((num) => (
                         <option key={num} value={num + 1}>{num + 1}</option>

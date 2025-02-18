@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import { Typography, Input, Button } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -51,7 +52,7 @@ export default function LogIn() {
             toast.success("Logged in successfully");
             setTimeout(() => {
                 window.location.reload();
-            }, 5000);
+            }, 2000);
         } catch (error) {
             setError(error.message);
         }
@@ -147,6 +148,8 @@ export default function LogIn() {
                             <a href="" className='text-xs underline hover:text-white'>Forgot Password ?</a>
                         </p>
                     </form>
+
+                    <div>dont have account <Link to={"/createAccount"} className="text-blue-500 hover:underline">Create Now!</Link></div>
                 </div>
             </div>
         ) : (
@@ -160,6 +163,11 @@ export default function LogIn() {
                 <span className="mb-4">
                     <strong>Email:</strong> {profile.email}
                 </span>
+                    <p>address :
+                        {profile.address && profile.address.map((address) => (
+                            <p>{address.street}, {address.city} {address.state}-{address.postalCode}</p>
+                        ))}
+                    </p>
                 <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
                     Log Out
                 </Button>
