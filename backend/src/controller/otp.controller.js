@@ -34,6 +34,7 @@ const generateOTP = AsyncHandler(async (req, res) => {
     const sended = await sendOtp(email, otp);
 
     if(!sended) {
+        OTP.deleteOne({_id : otpData._id});
         throw new ApiError(500, "OTP sending failed");
     }
 
