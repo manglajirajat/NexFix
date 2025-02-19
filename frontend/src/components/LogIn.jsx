@@ -4,6 +4,20 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import {
+    Activity,
+    Award,
+    Camera,
+    Gift,
+    LogOut,
+    Package,
+    Settings,
+    ShoppingCart,
+    Trash,
+    TrendingUp,
+    User,
+} from "lucide-react";
+import React from "react";
 
 export default function LogIn() {
     const [data, setData] = useState({ email: "", password: "" });
@@ -13,6 +27,7 @@ export default function LogIn() {
     const [error, setError] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
     const navigate = useNavigate();
+    const [profileImage, setProfileImage] = useState("/placeholder-user.jpg");
 
     const togglePasswordVisibility = () => setPasswordShown((cur) => !cur);
 
@@ -82,6 +97,15 @@ export default function LogIn() {
             localStorage.removeItem("accessToken");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => setProfileImage(reader.result);
+            reader.readAsDataURL(file);
         }
     };
 
@@ -156,26 +180,160 @@ export default function LogIn() {
                 </div>
             </div>
         ) : (
-            <div>
-                <span color="blue-gray" className="mb-4">
-                    Profile Details
-                </span>
-                <span className="mb-2">
-                    <strong>Name: </strong> {profile.name}
-                </span>
-                <span className="mb-4">
-                    <strong>Email:</strong> {profile.email}
-                </span>
-                    <div>
-                        address :
-                        {profile.address && profile.address.map((address) => (
-                            <address key={address._id}>{address.street}, {address.city} {address.state}-{address.postalCode}</address>
-                        ))}
-                        <Link to={"/addAddress"} className="text-blue-500 hover:underline">add address</Link>
+            <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-6">
+                {/* Profile Header */}
+                <div className="relative mb-8 bg-blue-600 text-white rounded-2xl p-6 shadow-lg">
+                    <div className="flex flex-col md:flex-row items-center gap-6">
+                        {/* Profile Image */}
+                        <div className="relative group">
+                            <div className="h-32 w-32 rounded-full border-4 border-white shadow-lg overflow-hidden">
+                                <img src={profileImage} alt="Profile" className="h-full w-full object-cover" />
+                            </div>
+                            <label className="absolute bottom-0 right-0 bg-gray-800 text-white p-2 rounded-full cursor-pointer">
+                                <Camera className="h-5 w-5" />
+                                <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                            </label>
+                        </div>
+
+                        {/* User Info */}
+                        <div>
+                            <h1 className="text-3xl font-bold">{profile.name}</h1>
+                            <p className="text-blue-200">Premium Member since 2023</p>
+                        </div>
+
+                        {/* Settings and Logout */}
+                        <div className="md:ml-auto flex gap-3">
+                            <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg flex items-center gap-2">
+                                <Settings className="h-4 w-4" /> Settings
+                            </button>
+                            <button className="bg-red-500 text-white px-4 py-2 rounded-lg flex items-center gap-2" onClick={handleLogout}>
+                                <LogOut className="h-4 w-4" /> Logout
+                            </button>
+                        </div>
                     </div>
-                <Button color="red" size="lg" className="mt-4" fullWidth onClick={handleLogout}>
-                    Log Out
-                </Button>
+                </div>
+
+                {/* Stats Cards */}
+                <div className="grid gap-4 md:grid-cols-4 mb-8">
+                    {[
+                        { icon: Package, label: "Total Orders", value: "248", trend: "+12%", color: "blue" },
+                        { icon: ShoppingCart, label: "Wishlist Items", value: "35", trend: "+3%", color: "purple" },
+                        { icon: Award, label: "Achievement Points", value: "1,502", trend: "+18%", color: "amber" },
+                        { icon: Activity, label: "Reviews Given", value: "28", trend: "+7%", color: "green" },
+                    ].map((stat, index) => (
+                        <div key={index} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+                            <div className={`inline-flex rounded-lg bg-${stat.color}-50 p-3 mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                                <stat.icon className={`h-6 w-6 text-${stat.color}-600`} />
+                            </div>
+                            <h3 className="font-semibold text-2xl">{stat.value}</h3>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="text-sm text-muted-foreground">{stat.label}</span>
+                                <span className="text-xs text-green-600 flex items-center gap-0.5">
+                                    <TrendingUp className="h-3 w-3" />
+                                    {stat.trend}
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Main Content */}
+                <div className="grid gap-6 lg:grid-cols-12">
+                    {/* Left Column - Activity */}
+                    <div className="lg:col-span-4 space-y-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 className="text-xl font-semibold mb-2">Recent Activity</h2>
+                            <p className="text-sm text-gray-500 mb-4">Your latest interactions</p>
+                            <div className="space-y-6">
+                                {[
+                                    { icon: Package, text: "Order #12345 delivered", time: "2 hours ago", color: "blue" },
+                                    { icon: Gift, text: "Added 3 items to wishlist", time: "5 hours ago", color: "purple" },
+                                    { icon: Award, text: "Earned Gold Member badge", time: "2 days ago", color: "amber" },
+                                ].map((activity, index) => (
+                                    <div key={index} className="flex items-start gap-4">
+                                        <div className={`rounded-full p-2 bg-${activity.color}-50`}>
+                                            <activity.icon className={`h-4 w-4 text-${activity.color}-600`} />
+                                        </div>
+                                        <div className="flex-1">
+                                            <p className="text-sm font-medium">{activity.text}</p>
+                                            <p className="text-xs text-gray-500">{activity.time}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 className="text-xl font-semibold mb-2">Achievement Badges</h2>
+                            <p className="text-sm text-gray-500 mb-4">Milestones reached</p>
+                            <div className="grid grid-cols-3 gap-4">
+                                {[...Array(6)].map((_, i) => (
+                                    <div key={i} className="flex flex-col items-center gap-2">
+                                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white">
+                                            <Award className="h-6 w-6" />
+                                        </div>
+                                        <span className="text-xs text-center font-medium">Level {i + 1}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Column - Main Content */}
+                    <div className="lg:col-span-8">
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <h2 className="text-xl font-semibold mb-4">Profile</h2>
+                            <div className="space-y-6">
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    <div className="space-y-2">
+                                        <label htmlFor="first-name" className="text-sm font-medium">First name</label>
+                                        <input id="first-name" placeholder="John" className="w-full border py-1.5 px-2 rounded-lg" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="last-name" className="text-sm font-medium">Last name</label>
+                                        <input id="last-name" placeholder="Doe" className="w-full border py-1.5 px-2 rounded-lg" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="email" className="text-sm font-medium">Email</label>
+                                        <input id="email" type="email" placeholder="john@example.com" className="w-full border py-1.5 px-2 rounded-lg" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="phone" className="text-sm font-medium">Phone</label>
+                                        <input id="phone" placeholder="+1 (555) 000-0000" className="w-full border py-1.5 px-2 rounded-lg" />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <h3 className="text-lg font-semibold">Shipping Address</h3>
+                                    <div className="grid gap-4">
+                                        <div className="space-y-2">
+                                            <label htmlFor="street" className="text-sm font-medium">Street Address</label>
+                                            <input id="street" placeholder="123 Main St" className="w-full border py-1.5 px-2 rounded-lg" />
+                                        </div>
+                                        <div className="grid gap-4 md:grid-cols-3">
+                                            <div className="space-y-2">
+                                                <label htmlFor="city" className="text-sm font-medium">City</label>
+                                                <input id="city" placeholder="New York" className="w-full border py-1.5 px-2 rounded-lg" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label htmlFor="state" className="text-sm font-medium">State</label>
+                                                <input id="state" placeholder="NY" className="w-full border py-1.5 px-2 rounded-lg" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label htmlFor="zip" className="text-sm font-medium">ZIP Code</label>
+                                                <input id="zip" placeholder="10001" className="w-full border py-1.5 px-2 rounded-lg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end">
+                                    <button className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     );
