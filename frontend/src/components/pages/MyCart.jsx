@@ -125,10 +125,11 @@ export default function MyCart() {
             }
 
             const paymentResult = await paymentResponse.json();
-            toast.success("Redirecting to payment gateway...");
+            toast.success("Order Placed Successfully Redirecting to payment gateway...");
             setTimeout(() => {
                 redirectToPayment(paymentResult.link_url);
             }, 2000);
+            fetchCart();
         } catch (error) {
             console.error(error);
             toast.error(error.message);
@@ -210,7 +211,7 @@ export default function MyCart() {
                     <Link to={"/addAddress"} className="text-blue-500 hover:underline">add address</Link>
                 </div>
 
-                <div className="">
+                <div className="w-60">
                     <p className="my-4">Payment Mode : </p>
                     <div>
                         <input type="radio" name="paymentMode" id="online" value="online" />

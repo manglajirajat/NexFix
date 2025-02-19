@@ -43,7 +43,7 @@ const getOrders = AsyncHandler(async (req, res) => {
         throw new ApiError(400, "User not found");
     }
 
-    const orders = await Order.find({ user: user._id });
+    const orders = await Order.find({ user: user._id }).populate("items.product", "_id name displayPicture price netPrice");
 
     return res.status(200).json(new ApiResponse(200, orders,"orders fetched successfully"));
 });
