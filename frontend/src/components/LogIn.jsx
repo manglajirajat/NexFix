@@ -191,7 +191,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loginLoading}
-                className="w-full py-2.5 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20 transition-all duration-200"
+                className="w-full py-2.5 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20 transition-all duration-200"
               >
                 {loginLoading ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto" />
@@ -201,8 +201,8 @@ export default function Login() {
               </button>
 
               <p className="text-center text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link to="/createAccount" className="text-blue-600 hover:text-blue-500 font-medium">
+                Don't have an account?
+                <Link to="/createAccount" className="text-blue-600 hover:text-blue-500 font-medium ml-1">
                   Create one
                 </Link>
               </p>

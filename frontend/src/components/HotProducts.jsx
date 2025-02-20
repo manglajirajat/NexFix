@@ -72,7 +72,7 @@ export function HotProducts() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
               <div className="relative">
                 <div className="relative h-64 bg-gray-100">
-                  <img src={product.displayPicture || "/placeholder.svg"} alt={product.name} className="object-cover w-full h-full" />
+                  <img src={product.displayPicture || "/placeholder.svg"} alt={product.name} className="object-contain bg-white w-full h-full" />
                 </div>
                 {product.badge && (
                   <span className="absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-md text-sm font-semibold">
