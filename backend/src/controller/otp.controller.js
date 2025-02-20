@@ -22,11 +22,21 @@ const generateOTP = AsyncHandler(async (req, res) => {
     const expiry = new Date();
     expiry.setMinutes(expiry.getMinutes() + 5);
 
-    const otpData = await OTP.create({
-        email,
-        otp,
-        expiry
-    });
+    const resendOtp = await OTP.findOne({email});
+    let otpData;
+
+    if(!resendOtp){
+        otpData = await OTP.create({
+            email,
+            otp,
+            expiry
+        });
+    }
+    else{
+        resendOtp.otp = otp;
+        resendOtp.expiry = expiry;
+        otpData = await resendOtp.save();
+    }
     
     if (!otpData) {
         throw new ApiError(500, "OTP generation failed");

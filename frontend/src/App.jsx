@@ -11,7 +11,7 @@ import MainHeader from "./components/MainHeader.jsx";
 import AddProductForm from "./components/AddProductForm.jsx";
 
 // My account
-import LogIn from "./components/LogIn.jsx";
+import Login from "./components/LogIn.jsx";
 import CreateAccount from "./components/CreateAccount.jsx";
 import AddAddressForm from "./components/AddAddressForm.jsx";
 
@@ -21,6 +21,7 @@ import ProductList from "./components/pages/ProductList.jsx";
 import Product from "./components/pages/Product.jsx";
 import MyCart from "./components/pages/MyCart.jsx";
 import CheckOut from "./components/pages/CheckOut.jsx";
+import MyOrders from "./components/MyOrders.jsx";
 
 // footer import
 import { Footer } from "./components/Footer.jsx";
@@ -39,10 +40,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/addProduct" element={<AddProductForm />} />
-        <Route path="/account" element={<LogIn />} />
-        <Route path="/addAddress" element={<AddAddressForm />} />
+
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/account" element={<Login />} />
+        <Route path="/addAddress" element={<AddAddressForm />} />
         <Route path="/cart" element={<MyCart />} />
+        <Route path="/tracking" element={<MyOrders />} />
+
         <Route path="/:category" element={<ProductList />} />
         <Route path="/:category/:subCategory" element={<ProductList />} />
         <Route path="/contact" element={"hii"} />

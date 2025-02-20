@@ -55,10 +55,6 @@ export function HotProducts() {
       if (!response.ok) throw new Error("Error occurred while adding to cart");
       setLoading(false);
       toast.success("Product added to cart successfully");
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
     } catch (error) {
       console.log(error);
     }
