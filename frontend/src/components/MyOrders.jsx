@@ -162,10 +162,10 @@ export default function MyOrders() {
                                         </div>
                                         <div className="flex items-center gap-3">
                                             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${
-                                                getOrderStatusCss("cancelled")
+                                                getOrderStatusCss(order.orderStatus)
                                             }`}>
-                                                {getOrderStatusIcon("cancelled")}
-                                                {"cancelled"}
+                                                {getOrderStatusIcon(order.orderStatus)}
+                                                {order.orderStatus}
                                             </span>
                                         </div>
                                     </div>
