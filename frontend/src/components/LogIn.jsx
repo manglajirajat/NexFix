@@ -3,6 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, LogIn, User, MapPin, LogOut } from 'lucide-react';
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import {
+    Activity,
+    Award,
+    Camera,
+    Gift,
+    LogOut,
+    Package,
+    Settings,
+    ShoppingCart,
+    Trash,
+    TrendingUp,
+    User,
+} from "lucide-react";
+import React from "react";
 
 export default function Login() {
   const [data, setData] = useState({ email: "", password: "" });
