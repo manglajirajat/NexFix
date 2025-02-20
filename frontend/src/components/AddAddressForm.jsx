@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function AddAddressForm() {
-    const [data, setData] = useState({ street: "", city: "", state: "", postalCode: "" });
+    const [data, setData] = useState({ type:"", street: "", city: "", state: "", postalCode: "" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -43,6 +43,17 @@ export default function AddAddressForm() {
                 <h1 className="text-xl font-bold mb-4 text-center">Add Address</h1>
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label htmlFor="street" className="block font-medium">Type</label>
+                        <input
+                            type="text"
+                            name="type"
+                            value={data.type}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border rounded-md"
+                        />
+                    </div>
                     <div>
                         <label htmlFor="street" className="block font-medium">Street</label>
                         <input

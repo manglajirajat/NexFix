@@ -5,6 +5,10 @@ const addressSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
     },
+    type: {
+        type: String,
+        required: true,
+    },
     street: {
         type: String,
         required: true,

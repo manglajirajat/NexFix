@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { 
-  Eye, EyeOff, LogIn, User, MapPin, LogOut, 
-  Camera, Trash2, ShoppingBag, Heart, Settings,
-  Package, Edit3, Plus, Home
+  Eye, EyeOff, LogIn, User, LogOut, 
+  Camera, Trash2, Heart,
+  Package, Edit3, Plus, MapPinned
 } from 'lucide-react';
 import { toast } from "react-toastify";
 
@@ -15,6 +15,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
+  const [addresses,setAddress] = useState([]);
+  const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setPasswordShown((cur) => !cur);
@@ -79,6 +81,8 @@ export default function Login() {
 
       const result = await response.json();
       setProfile(result.data);
+      setAddress(result.data.address);
+      await fetchOrders();
     } catch (error) {
       setError(error.message);
       localStorage.removeItem("accessToken");
@@ -97,49 +101,33 @@ export default function Login() {
     }, 2000);
   };
 
+  const fetchOrders = async () => {
+    try {
+        const response = await fetch("http://localhost:3000/api/v1/order/getOrders", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch orders");
+        }
+
+        const result = await response.json();
+        setOrders(result.data);
+    } catch (error) {
+        setError(error.message);
+    } finally {
+        setLoading(false);
+    }
+  };
+
   useEffect(() => {
     checkAuthStatus();
   }, []);
 
-  const [addresses] = useState([
-    {
-      id: 1,
-      type: 'Home',
-      street: '123 Main Street',
-      city: 'San Francisco',
-      state: 'CA',
-      postalCode: '94105',
-      isDefault: true
-    },
-    {
-      id: 2,
-      type: 'Office',
-      street: '456 Market Street',
-      city: 'San Francisco',
-      state: 'CA',
-      postalCode: '94103',
-      isDefault: false
-    }
-  ]);
-
-  const [orders] = useState([
-    { 
-      id: 1, 
-      date: '2024-03-15', 
-      status: 'Delivered', 
-      total: '$129.99',
-      items: 3,
-      trackingNumber: 'USP123456789'
-    },
-    { 
-      id: 2, 
-      date: '2024-03-10', 
-      status: 'In Transit', 
-      total: '$79.99',
-      items: 2,
-      trackingNumber: 'USP987654321'
-    }
-  ]);
 
   const [wishlist] = useState([
     { 
@@ -326,7 +314,7 @@ export default function Login() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-500">Member Since</label>
                 <div className="p-4 bg-white rounded-lg border border-gray-200">
-                  <span className="text-gray-900">{profile.memberSince}</span>
+                  <span className="text-gray-900">{profile.createdAt}</span>
                 </div>
               </div>
             </div>
@@ -334,10 +322,10 @@ export default function Login() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">Shipping Addresses</h2>
-                <button className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                <Link to="/addAddress" className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
                   <Plus className="w-4 h-4 mr-2" />
                   Add New Address
-                </button>
+                </Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {addresses.map((address) => (
@@ -345,14 +333,9 @@ export default function Login() {
                     key={address.id}
                     className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition-colors relative group"
                   >
-                    {address.isDefault && (
-                      <span className="absolute top-2 right-2 px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full">
-                        Default
-                      </span>
-                    )}
                     <div className="flex items-start space-x-3">
                       <div className="p-2 bg-blue-50 rounded-lg">
-                        <Home className="w-5 h-5 text-blue-500" />
+                        <MapPinned className="w-5 h-5 text-blue-500" />
                       </div>
                       <div>
                         <h3 className="font-medium text-gray-900">{address.type}</h3>
@@ -379,18 +362,22 @@ export default function Login() {
       case 'orders':
         return (
           <div className="space-y-4">
-            {orders.map(order => (
-              <div key={order.id} className="bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition-colors overflow-hidden">
+            {orders.length != 0 ? (orders.map((order) => (
+              <div key={order._id} className="bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition-colors overflow-hidden">
                 <div className="p-4 border-b border-gray-100">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-sm text-gray-500">Order #{order.id}</p>
-                      <p className="font-medium text-gray-900 mt-1">{order.date}</p>
+                      <p className="text-sm text-gray-500">Order #{order._id}</p>
+                      <p className="font-medium text-gray-900 mt-1">{new Date(order.createdAt).toLocaleString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-lg font-semibold text-blue-600">{order.total}</p>
                       <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-600 mt-1">
-                        {order.status}
+                        {order.orderStatus}
                       </span>
                     </div>
                   </div>
@@ -399,16 +386,20 @@ export default function Login() {
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center text-gray-600">
                       <Package className="w-4 h-4 mr-2" />
-                      {order.items} items
+                      {order.items.length} items
                     </div>
                     <div className="flex items-center text-blue-600 hover:text-blue-700 cursor-pointer">
                       <span className="mr-2">Track Order</span>
-                      <span className="text-gray-400">#{order.trackingNumber}</span>
+                      {/* <span className="text-gray-400">#{"order.trackingNumber"}</span> */}
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
+            ))) : (
+              <div className="p-4 bg-white rounded-lg border border-gray-200 text-gray-600">
+                You have no orders yet.
+              </div>
+            )}
           </div>
         );
       case 'wishlist':

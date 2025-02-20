@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     refreshToken : {
         type : String
     }
-});
+},{timestamps : true});
 
 //to protect password
 userSchema.pre("save", async function(next){
