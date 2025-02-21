@@ -207,7 +207,7 @@ export default function MyOrders() {
                                             <div className="text-xl font-bold text-gray-900">
                                                 ₹{order.total.toLocaleString()}
                                                 <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs ml-2 font-medium ${
-                                                    order.paymentStatus === 'PAID' 
+                                                    order.paymentStatus === 'completed' 
                                                     ? 'bg-green-50 text-green-700 ring-1 ring-green-600/10'
                                                     : 'bg-red-50 text-red-700 ring-1 ring-red-600/10'
                                                  }`}>

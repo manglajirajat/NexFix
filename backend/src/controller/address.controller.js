@@ -5,7 +5,7 @@ import { User } from "../models/user.model.js";
 import { Address } from "../models/address.model.js";
 
 const addAdress = AsyncHandler(async (req,res) => {
-    const {street,city,state,postalCode,isDefault} = req.body;
+    const {type,street,city,state,postalCode} = req.body;
 
     if(!street || !city || !state || !postalCode){
         throw new ApiError(400,"all fields are required");
@@ -18,6 +18,7 @@ const addAdress = AsyncHandler(async (req,res) => {
 
     const existingAddress = await Address.findOne({
         user : user._id,
+        type,
         street,
         city,
         state,
@@ -30,6 +31,7 @@ const addAdress = AsyncHandler(async (req,res) => {
 
     const address = await Address.create({
         user : user._id,
+        type,
         street,
         city,
         state,
