@@ -3,6 +3,7 @@ import {ApiResponse} from "../utils/ApiResponse.js";
 import {ApiError} from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { Cart } from "../models/cart.model.js";
+import { uploadOnCloud } from "../utils/cloudinary.js";
 
 const generateRefreshAndAccessToken = async (userId) => {
     try{
@@ -22,6 +23,7 @@ const generateRefreshAndAccessToken = async (userId) => {
 
 const registerUser = AsyncHandler(async(req,res)=>{
     const {name,email,password,contactNumber} = req.body;
+    const image = req.file;
 
     if(!name || !email || !password || !contactNumber){
         throw new ApiError(400,"enter all fields");
@@ -37,8 +39,14 @@ const registerUser = AsyncHandler(async(req,res)=>{
         throw new ApiError(400,"password must be atleast 6 length");
     }
 
+    let imageUrl;
+    if(image){
+        imageUrl = (await uploadOnCloud(image.path)).url;
+    }
+
     const user = await User.create({
         name,
+        image : imageUrl,
         email,
         password,
         contactNumber,
@@ -125,9 +133,30 @@ const getLoggedInUser = AsyncHandler(async (req,res) => {
     return res.status(200).json(new ApiResponse(200,user,"user found"));
 })
 
+const setnewPassword = AsyncHandler(async (req,res) => {
+    const {email,newPassword} = req.body;
+
+    if(!email){
+        throw new ApiError(400,"email is required");
+    }
+
+    const user = await User.findOne({email});
+
+    if(!user){
+        throw new ApiError(400,"user not found");
+    }
+
+    user.password = newPassword;
+
+    await user.save();
+
+    res.status(200).json(new ApiResponse(200,{},"password changed successfully"));
+})
+
 export {
     registerUser,
     logIn,
     logOut,
-    getLoggedInUser
+    getLoggedInUser,
+    setnewPassword
 }

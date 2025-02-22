@@ -93,7 +93,6 @@ export default function NavigationMenu() {
       setUserType(result.data.userType);
     } catch (error) {
       console.log("User not logged in:", error);
-      localStorage.removeItem("accessToken");
     }
   };
 

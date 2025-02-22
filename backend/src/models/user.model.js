@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
         required : true,
         trim : true
     },
+    image : {
+        type : String,
+        default : "https://res.cloudinary.com/ddr9zrcuq/image/upload/v1740127272/diaps1xr6y0ghou774wf.png"
+    },
     email : {
         type : String,
         required : true,

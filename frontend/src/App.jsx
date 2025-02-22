@@ -25,6 +25,8 @@ import MyOrders from "./components/MyOrders.jsx";
 
 // footer import
 import { Footer } from "./components/Footer.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import UpdateAddress from "./components/UpdateAddress.jsx";
 
 export default function App() {
   
@@ -42,10 +44,12 @@ export default function App() {
         <Route path="/addProduct" element={<AddProductForm />} />
 
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/changePassword" element={<ForgotPassword />} />
         <Route path="/account" element={<Login />} />
         <Route path="/addAddress" element={<AddAddressForm />} />
         <Route path="/cart" element={<MyCart />} />
         <Route path="/tracking" element={<MyOrders />} />
+        <Route path="/updateAddress/:addressId" element={<UpdateAddress />} />
 
         <Route path="/:category" element={<ProductList />} />
         <Route path="/:category/:subCategory" element={<ProductList />} />
