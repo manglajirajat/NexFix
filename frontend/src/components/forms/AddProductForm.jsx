@@ -23,9 +23,9 @@ export default function AddProductForm() {
     const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
     // Define subcategories for each category
     const subCategories = {
-        hardware: ["Safety & Security", "Hand Tools", "Fastenrs", "Electrical Supplies", "Door Hardware"],
-        paint: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools","Distemper"],
-        sanitary: ["Bathroom Fixtures", "Toliets & Bidets", "Bathroom Accessories", "Plumbing", "Solvent"],
+        Hardware: ["Safety & Security", "Hand Tools", "Fastenrs", "Electrical Supplies", "Door Hardware"],
+        Paint: ["Exterior", "Interior", "Enamel", "Primer","Paint Tools","Distemper"],
+        Sanitary: ["Bathroom Fixtures", "Toliets & Bidets", "Bathroom Accessories", "Plumbing", "Solvent"],
     };
 
     const handleChange = (e) => {
@@ -146,7 +146,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="hardware"
+                                    value="Hardware"
                                     onChange={handleChange}
                                     required
                                 />{" "}
@@ -156,7 +156,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="paint"
+                                    value="Paint"
                                     onChange={handleChange}
                                 />{" "}
                                 Paint
@@ -165,7 +165,7 @@ export default function AddProductForm() {
                                 <input
                                     type="radio"
                                     name="category"
-                                    value="sanitary"
+                                    value="Sanitary"
                                     onChange={handleChange}
                                 />{" "}
                                 Sanitary
@@ -186,7 +186,7 @@ export default function AddProductForm() {
                         >
                             <option value="">Select Subcategory</option>
                             {formData.category && subCategories[formData.category].map((subCat) => (
-                                <option value={subCat.toLowerCase().replace(" ","-")} key={subCat}>
+                                <option value={subCat.replace(" ","-")} key={subCat}>
                                     {subCat}
                                 </option>
                             ))}

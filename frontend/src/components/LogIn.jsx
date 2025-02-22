@@ -412,7 +412,7 @@ export default function Login() {
                       {order.items.length} items
                     </div>
                     <div className="flex items-center text-blue-600 hover:text-blue-700 cursor-pointer">
-                      <span className="mr-2">Track Order</span>
+                      <Link to={"/tracking"} className="mr-2">Track Order</Link>
                       {/* <span className="text-gray-400">#{"order.trackingNumber"}</span> */}
                     </div>
                   </div>
