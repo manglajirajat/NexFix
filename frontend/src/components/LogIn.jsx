@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { 
   Eye, EyeOff, LogIn, User, LogOut, 
-  Camera, Trash2, Heart,
+  Camera, Trash2, Heart, Home, Briefcase,
   Package, Edit3, Plus, MapPinned
 } from 'lucide-react';
 import { toast } from "react-toastify";
@@ -335,7 +335,7 @@ export default function Login() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-500">Member Since</label>
                 <div className="p-4 bg-white rounded-lg border border-gray-200">
-                  <span className="text-gray-900">{profile.createdAt}</span>
+                  <span className="text-gray-900">{new Date(profile.createdAt).toLocaleDateString('en-IN')}</span>
                 </div>
               </div>
             </div>
@@ -356,7 +356,9 @@ export default function Login() {
                   >
                     <div className="flex items-start space-x-3">
                       <div className="p-2 bg-blue-50 rounded-lg">
-                        <MapPinned className="w-5 h-5 text-blue-500" />
+                        {address.type === "Home" && <Home className="h-5 w-5 text-blue-500" />}
+                        {address.type === "Work" && <Briefcase className="h-5 w-5 text-blue-500" />}
+                        {address.type === "Other" && <MapPinned className="h-5 w-5 text-blue-500" />}
                       </div>
                       <div>
                         <h3 className="font-medium text-gray-900">{address.type}</h3>
