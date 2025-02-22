@@ -85,7 +85,6 @@ export default function Login() {
       await fetchOrders();
     } catch (error) {
       setError(error.message);
-      localStorage.removeItem("accessToken");
     } finally {
       setLoading(false);
     }
@@ -124,9 +123,31 @@ export default function Login() {
     }
   };
 
+  const deleteAddress = async (addressToDelete) => {
+    try{
+      const response = await fetch("http://localhost:3000/api/v1/address/delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({ addressToDelete }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete address");
+      }
+
+      toast.success("Address deleted successfully");
+      checkAuthStatus();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, [profile]);
 
 
   const [wishlist] = useState([
@@ -206,7 +227,7 @@ export default function Login() {
                     required
                     value={data.password}
                     onChange={handleChange}
-                    className="block w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors duration-200"
+                    className="block w-full pr-10 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors duration-200"
                     placeholder="Enter your password"
                   />
                   <button
@@ -234,9 +255,9 @@ export default function Login() {
                     Remember me
                   </label>
                 </div>
-                <a href="#" className="text-blue-600 hover:text-blue-500">
+                <Link to={"/changePassword"} className="text-blue-600 hover:text-blue-500">
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               <button
@@ -272,7 +293,7 @@ export default function Login() {
             <div className="relative">
               <div className="w-32 h-32 mx-auto relative">
                 <img
-                  src={profile.profilePic || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400'}
+                  src={profile.image}
                   alt="Profile"
                   className="w-full h-full object-cover rounded-full border-4 border-white shadow-lg"
                 />
@@ -330,7 +351,7 @@ export default function Login() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {addresses.map((address) => (
                   <div
-                    key={address.id}
+                    key={address._id}
                     className="p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition-colors relative group"
                   >
                     <div className="flex items-start space-x-3">
@@ -346,10 +367,10 @@ export default function Login() {
                       </div>
                     </div>
                     <div className="mt-4 flex items-center justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                      <Link to={`/updateAddress/${address._id}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
                         Edit
-                      </button>
-                      <button className="text-red-600 hover:text-red-700 text-sm font-medium">
+                      </Link>
+                      <button className="text-red-600 hover:text-red-700 text-sm font-medium" onClick={()=>deleteAddress(address._id)}>
                         Remove
                       </button>
                     </div>

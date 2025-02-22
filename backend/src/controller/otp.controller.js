@@ -51,6 +51,51 @@ const generateOTP = AsyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, otpData, "OTP generated successfully"));
 });
 
+const generateOTPforPassChange = AsyncHandler(async (req,res) => {
+    const { email } = req.body;
+    if (!email) {
+            throw new ApiError(400, "Email is required");
+        }
+    
+        const user = await User.findOne({ email });
+    
+        if(!user) {
+            throw new ApiError(400, "Email does not exist");
+        }
+    
+        const otp = Math.floor(100000 + Math.random() * 900000);
+        const expiry = new Date();
+        expiry.setMinutes(expiry.getMinutes() + 5);
+    
+        const resendOtp = await OTP.findOne({email});
+    
+        let otpData;
+        if(!resendOtp){
+            otpData = await OTP.create({
+                email,
+                otp,
+                expiry
+            });
+        }else{
+            resendOtp.otp = otp;
+            resendOtp.expiry = expiry;
+            otpData = await resendOtp.save();
+        }
+    
+        if (!otpData) {
+            throw new ApiError(500, "OTP generation failed");
+        }
+
+        const sended = await sendOtp(email, otp);
+        if(!sended) {
+            OTP.deleteOne({_id : otpData._id});
+            throw new ApiError(500, "OTP sending failed");
+        }
+
+        return res.status(200).json(new ApiResponse(200, otpData, "OTP generated successfully"));
+    }
+)
+
 const verifyOTP = AsyncHandler(async (req, res) => {
     const { email, otp } = req.body;
 
@@ -76,4 +121,4 @@ const verifyOTP = AsyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, null, "OTP verified successfully"));
 });
 
-export { generateOTP, verifyOTP };
+export { generateOTP,generateOTPforPassChange, verifyOTP };

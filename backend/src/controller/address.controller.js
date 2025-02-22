@@ -55,7 +55,6 @@ const deleteAddress = AsyncHandler(async (req,res) => {
     if(!user){
         throw new ApiError(400,"user not exist");
     }
-
     const {addressToDelete} = req.body;
 
     if(!addressToDelete){
@@ -78,7 +77,7 @@ const deleteAddress = AsyncHandler(async (req,res) => {
     await user.save({validateBeforeSave : false});
 
     res.status(204)
-    .json(new ApiResponse(204,{},"address deleted successfully"));
+    .json(new ApiResponse(200,{},"address deleted successfully"));
 })
 
 const getAddress = AsyncHandler(async (req,res) => {
@@ -94,4 +93,45 @@ const getAddress = AsyncHandler(async (req,res) => {
     .json(new ApiResponse(200,address,"fetched all address"));
 })
 
-export {addAdress,deleteAddress,getAddress};
+const updateAddress = AsyncHandler(async (req,res) => {
+    const {_id,type,street,city,state,postalCode} = req.body;
+
+    if(!_id){
+        throw new ApiError(400,"_id is required");
+    }
+
+    const address = await Address.findById(_id);
+
+    if(!address){
+        throw new ApiError(400,"address not found");
+    }
+
+    address.type = type;
+    address.street = street;
+    address.city = city;
+    address.state = state;
+    address.postalCode = postalCode;
+
+    await address.save();
+
+    res.status(200).json(new ApiResponse(200,address,"address updated successfully"));
+})
+
+const getAddressById = AsyncHandler(async (req,res) => {
+    const {addressId} = req.body;
+
+    if(!addressId){
+        throw new ApiError(400,"addressId is required");
+    }
+
+    const address = await Address.findById(addressId);
+
+    if(!address){
+        throw new ApiError(400,"address not found");
+    }
+
+    res.status(200).json(new ApiResponse(200,address,"address found"));
+})
+
+
+export {addAdress,deleteAddress,getAddress,updateAddress,getAddressById};
