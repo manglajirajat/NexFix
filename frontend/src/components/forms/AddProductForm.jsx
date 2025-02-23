@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function AddProductForm() {
     const navigate = useNavigate();
+    const [userType, setUserType] = useState("");
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -76,6 +77,38 @@ export default function AddProductForm() {
             setIsSubmitting(false);
         }
     };
+
+    const checkAuthStatus = async () => {
+        const token = localStorage.getItem("accessToken");
+
+        try {
+            const response = await fetch("http://localhost:3000/api/v1/user/me", {
+              method: "GET",
+              headers: { Authorization: `Bearer ${token}` },
+            });
+      
+            if (!response.ok) {
+              throw new Error("Session expired. Please log in again.");
+            }
+      
+            const result = await response.json();
+            setUserType(result.data.userType);
+        } catch (error) {
+            console.log(error);  
+        }
+    };
+
+    useEffect(() => {
+        checkAuthStatus();
+    },[]);
+
+    if(userType !== "admin"){
+        return(
+            <div>
+                not authorized to view this page
+            </div>
+        )
+    }
 
     return (
         <div className="p-4 text-center">

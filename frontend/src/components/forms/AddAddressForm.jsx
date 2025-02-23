@@ -7,7 +7,7 @@ export default function AddAddressForm() {
     const [data, setData] = useState({ type: "", street: "", city: "", state: "", postalCode: "" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };

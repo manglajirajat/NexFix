@@ -343,7 +343,7 @@ export default function Login() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">Shipping Addresses</h2>
-                <Link to="/addAddress" className="flex items-center px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                <Link to="/addAddress" className = {`flex items-center px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors ${addresses.length === 3 ? 'hidden' : ''}`}>
                   <Plus className="w-4 h-4 mr-2" />
                   Add New Address
                 </Link>

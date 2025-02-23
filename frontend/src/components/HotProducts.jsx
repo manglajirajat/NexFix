@@ -40,8 +40,13 @@ export function HotProducts() {
       alert("Please select a quantity first.");
       return;
     }
-    setLoading(true);
 
+    if (localStorage.getItem("accessToken") === null) {
+      toast.error("Please login to add products to cart");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:3000/api/v1/cart/addInCart", {
         method: "POST",
@@ -53,10 +58,12 @@ export function HotProducts() {
       });
 
       if (!response.ok) throw new Error("Error occurred while adding to cart");
-      setLoading(false);
       toast.success("Product added to cart successfully");
     } catch (error) {
       console.log(error);
+      toast.error("Error occurred while adding to cart");
+    } finally {
+      setLoading(false);
     }
   };
 

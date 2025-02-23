@@ -147,7 +147,9 @@ export default function MyCart() {
                 toast.success("Order placed successfully!");
             }
             
-            fetchCart();
+            setTimeout(() => {
+                fetchCart();
+            }, 2000);
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -325,7 +327,7 @@ export default function MyCart() {
                                         ))}
                                         <Link
                                             to="/addAddress"
-                                            className="flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-gray-300 text-sm font-medium text-blue-600 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                                            className={`flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-gray-300 text-sm font-medium text-blue-600 hover:border-gray-400 hover:bg-gray-50 transition-colors ${user.address?.length == 3 ? "hidden" : ""}`}
                                         >
                                             <Plus className="h-4 w-4" />
                                             Add New Address
@@ -410,31 +412,3 @@ export default function MyCart() {
         </div>
     );
 }
-
-
-
-
-
-// Check Payment Status
-            // const checkPaymentStatus = {
-            //     method: 'GET',
-            //     headers: {
-            //         'x-client-id': 'TEST10480256ed35a6380df1066e386d65208401',
-            //         'x-client-secret': 'cfsk_ma_test_e94dbc2f14d6e0b297dc6fcd383f0f12_eeeac491',
-            //         'x-api-version': '2025-01-01'
-            //     }
-            // };
-    
-            // const paymentStatus = await fetch(`https://sandbox.cashfree.com/pg/links/${order._id}`, checkPaymentStatus);
-            
-            // if (!paymentStatus.ok) {
-            //     throw new Error("An error occurred while checking payment status");
-            // }
-    
-            // const paymentStatusResult = await paymentStatus.json();
-    
-            // if (paymentStatusResult.status === "PAID") {
-            //     toast.success("Order placed successfully!");
-            // } else {
-            //     toast.error("Payment failed. Please try again.");
-            // }

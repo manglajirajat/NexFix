@@ -31,9 +31,26 @@ export default function MyOrders() {
         }
     };
 
+    const updateOrderStatus = () => {
+        orders.forEach(async(order) => {
+            const response = await fetch(`http://localhost:3000/api/v1/order/updateOrderStatus/${order._id}`, {
+                method : "GET",
+                headers : {
+                    "Content-Type" : "application/json",
+                    Authorization : `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            });
+        });
+    }
+
+
     useEffect(() => {
-        fetchOrders();
+        fetchOrders()
     }, []);
+
+    useEffect(() => {
+        updateOrderStatus();
+    }, [orders]);
 
     const getOrderStatusIcon = (status) => {
         switch (status) {
