@@ -20,6 +20,7 @@ import cartRoute from './routes/cart.routes.js';
 import OrderRoute from './routes/order.routes.js';
 import otpRoutes from "./routes/otp.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
+import ReviewRoute from "./routes/review.routes.js";
 
 app.use('/api/v1/user',userRoute);
 app.use('/api/v1/product',productRoute);
@@ -28,5 +29,6 @@ app.use('/api/v1/cart',cartRoute);
 app.use('/api/v1/order',OrderRoute);
 app.use("/api/v1/otp", otpRoutes);
 app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/review", ReviewRoute);
 
 export default app;

@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { 
   Eye, EyeOff, LogIn, User, LogOut, 
   Camera, Trash2, Heart, Home, Briefcase,
-  Package, Edit3, Plus, MapPinned
+  Package, Edit3, Plus, MapPinned, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { toast } from "react-toastify";
 
@@ -17,6 +17,8 @@ export default function Login() {
   const [activeTab, setActiveTab] = useState('profile');
   const [addresses,setAddress] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(4);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setPasswordShown((cur) => !cur);
@@ -168,6 +170,13 @@ export default function Login() {
       reviews: 256
     }
   ]);
+
+  // Pagination
+  const lastOrder = currentPage * itemsPerPage;
+  const firstOrder = lastOrder - itemsPerPage;
+  const currentOrders = orders.slice(firstOrder, lastOrder);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (loading) {
     return (
@@ -384,41 +393,85 @@ export default function Login() {
         );
       case 'orders':
         return (
-          <div className="space-y-4">
-            {orders.length != 0 ? (orders.map((order) => (
-              <div key={order._id} className="bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition-colors overflow-hidden">
-                <div className="p-4 border-b border-gray-100">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm text-gray-500">Order #{order._id}</p>
-                      <p className="font-medium text-gray-900 mt-1">{new Date(order.createdAt).toLocaleString('en-US', { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })}</p>
+          <div>
+            {orders.length !== 0 ? (
+              <div className="space-y-4">
+                {currentOrders.map((order) => (
+                  <div
+                    key={order._id}
+                    className="bg-white rounded-lg border border-gray-200 hover:border-blue-500 transition-colors overflow-hidden"
+                  >
+                    <div className="p-4 border-b border-gray-100">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-sm text-gray-500">Order #{order._id}</p>
+                          <p className="font-medium text-gray-900 mt-1">
+                            {new Date(order.createdAt).toLocaleString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            })}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-semibold text-blue-600">{order.total}</p>
+                          <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-600 mt-1">
+                            {order.orderStatus}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-lg font-semibold text-blue-600">{order.total}</p>
-                      <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-600 mt-1">
-                        {order.orderStatus}
-                      </span>
+                    <div className="px-4 py-3 bg-gray-50">
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center text-gray-600">
+                          <Package className="w-4 h-4 mr-2" />
+                          {order.items.length} items
+                        </div>
+                        <div className="flex items-center text-blue-600 hover:text-blue-700 cursor-pointer">
+                          <Link to="/tracking" className="mr-2">
+                            Track Order
+                          </Link>
+                          {/* <span className="text-gray-400">#{"order.trackingNumber"}</span> */}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="px-4 py-3 bg-gray-50">
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center text-gray-600">
-                      <Package className="w-4 h-4 mr-2" />
-                      {order.items.length} items
-                    </div>
-                    <div className="flex items-center text-blue-600 hover:text-blue-700 cursor-pointer">
-                      <Link to={"/tracking"} className="mr-2">Track Order</Link>
-                      {/* <span className="text-gray-400">#{"order.trackingNumber"}</span> */}
-                    </div>
-                  </div>
+                ))}
+        
+                {/* Pagination Controls */}
+                <div className="flex justify-center mt-8">
+                  <nav className="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                    <button
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                    >
+                      <span className="sr-only">Previous</span>
+                      <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    {Array.from({ length: Math.ceil(orders.length / itemsPerPage) }, (_, i) => (
+                      <button
+                        key={i + 1}
+                        onClick={() => paginate(i + 1)}
+                        className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium ${
+                          currentPage === i + 1 ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={currentPage === Math.ceil(orders.length / itemsPerPage)}
+                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                    >
+                      <span className="sr-only">Next</span>
+                      <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                  </nav>
                 </div>
               </div>
-            ))) : (
+            ) : (
               <div className="p-4 bg-white rounded-lg border border-gray-200 text-gray-600">
                 You have no orders yet.
               </div>

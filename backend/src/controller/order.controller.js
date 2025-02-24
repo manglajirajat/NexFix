@@ -52,7 +52,6 @@ const getOrders = AsyncHandler(async (req, res) => {
 
 const updateOrderStatus = AsyncHandler(async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     if (!id) {
         throw new ApiError(404, "Order not found");
     }
@@ -76,19 +75,54 @@ const updateOrderStatus = AsyncHandler(async (req, res) => {
         const paymentStatus = await fetch(`https://sandbox.cashfree.com/pg/links/${id}`, checkPaymentStatus);
             
         if (!paymentStatus.ok) {
-            throw new Error("An error occurred while checking payment status");
+            throw new Error("An error occurred while updating status");
         }
     
         const paymentStatusResult = await paymentStatus.json();
     
     if (paymentStatusResult.link_status === "PAID") {
         order.paymentStatus = "completed";
+        if(order.orderStatus === "pending") order.orderStatus = "processing";
         await order.save();
     }
 
     return res.status(200).json(new ApiResponse(200, order, "Order status updated successfully"));
 });
 
-export { placeOrderViaCart, getOrders, updateOrderStatus };
+const getPaymentLink = AsyncHandler(async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        throw new ApiError(404, "Order not found");
+    }
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+        throw new ApiError(404, "Order not found");
+    }
+
+    const checkPaymentStatus = {
+        method: 'GET',
+        headers: {
+            'x-client-id': 'TEST10480256ed35a6380df1066e386d65208401',
+            'x-client-secret': 'cfsk_ma_test_e94dbc2f14d6e0b297dc6fcd383f0f12_eeeac491',
+            'x-api-version': '2025-01-01'
+        }
+    };
+
+    const paymentStatus = await fetch(`https://sandbox.cashfree.com/pg/links/${id}`, checkPaymentStatus);
+        
+    if (!paymentStatus.ok) {
+        throw new Error("An error occurred while checking payment status");
+    }
+
+    const paymentStatusResult = await paymentStatus.json();
+
+    const paymentLink = paymentStatusResult.link_url;
+
+    return res.status(200).json(new ApiResponse(200, paymentLink, "Payment link fetched successfully"));
+});
+
+export { placeOrderViaCart, getOrders, updateOrderStatus, getPaymentLink };
 
     

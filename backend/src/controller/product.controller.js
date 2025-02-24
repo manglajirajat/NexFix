@@ -61,7 +61,14 @@ const getProductDetails = AsyncHandler(async (req,res) =>{
         throw new ApiError(400,'product_id is mandatory');
     }
 
-    const product = await Product.findById(product_id);
+    const product = await Product.findById(product_id).populate({
+        path: 'reviews',
+        select: 'rating comment userId', // Select the fields you want from the Review model
+        populate: {
+            path: 'userId', // Populate the userId field in the Review model
+            select: 'name'  // Select the fields you want from the User model
+        }
+    });
 
     if(!product){
         throw new ApiError(404,'product not found');
