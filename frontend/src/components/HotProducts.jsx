@@ -73,13 +73,13 @@ export function HotProducts() {
         <h2 className="text-2xl lg:text-3xl font-bold">Hot Selling Products</h2>
         <Link to="/featured" className="text-blue-600 hover:underline">View All</Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="flex gap-6 overflow-x-auto py-4">
         {products.map((product) => (
-          <div key={product._id} className="group">
+          <div key={product._id} className="group min-w-72 w-72">
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
               <div className="relative">
                 <div className="relative h-64 bg-gray-100">
-                  <img src={product.displayPicture || "/placeholder.svg"} alt={product.name} className="object-contain bg-white w-full h-full" />
+                  <img src={product.displayPicture || "/placeholder.svg"} alt={product.name} className="object-contain w-full h-full" />
                 </div>
                 {product.badge && (
                   <span className="absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-md text-sm font-semibold">
@@ -88,7 +88,7 @@ export function HotProducts() {
                 )}
               </div>
               <div className="p-4">
-                <Link to={`/product/${product._id}`}>
+                <Link to={`/product/${product._id}`} className="cursor-pointer">
                   <div className="text-sm text-blue-600 mb-1">{product.category}</div>
                   <h3 className="font-semibold mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                     {product.name}
