@@ -93,7 +93,7 @@ export default function ProductList() {
                   <img
                     src={product.displayPicture}
                     alt={product.name}
-                    className="h-64 w-full object-cover object-center group-hover:opacity-75"
+                    className="h-64 w-full object-contain object-center group-hover:opacity-75"
                   />
                 </div>
                 <div className="p-4">
