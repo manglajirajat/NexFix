@@ -51,7 +51,7 @@ export default function MainHeader () {
         Hardware & Paints
       </div>
     </Link>
-    <LocationSelector />
+    {/* <LocationSelector /> */}
   </div>
 
   <div className="flex-1 w-full lg:max-w-2xl lg:mx-12">

@@ -3,7 +3,7 @@ import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navigationItems = {
-  HARDWARE: {
+  Hardware: {
     categories: [
       { name: "Door Hardware", items: ["Handels", "Door Stoper"] },
       { name: "Hand Tools", items: ["Karni", "Retti", "Showel", "Hammer"] },
@@ -12,7 +12,7 @@ const navigationItems = {
       { name: "Fasteners", items: ["Screws", "Nails", "Nut & Bolts"] },
     ],
   },
-  PAINT: {
+  Paint: {
     categories: [
       { name: "Interior Paints", items: ["Royale", "Pixa"] },
       { name: "Exterior Paints", items: ["Ace", "Apex Ultima"] },
@@ -22,7 +22,7 @@ const navigationItems = {
       { name: "Primer", items: ["Wood Primer", "Metal Primer"] },
     ],
   },
-  SANITARY: {
+  Sanitary: {
     categories: [
       { name: "Bathroom Fixtures", items: [" "] },
       { name: "Toilets & Bidets", items: [" "] },
@@ -31,7 +31,7 @@ const navigationItems = {
       { name: "Solvent", items: [" "] },
     ],
   },
-  "POWER TOOLS": {
+  "Power tools": {
     categories: [
       { name: "Drilling Tools", items: [" "] },
       { name: "Cutting Tools", items: [" "] },
@@ -208,7 +208,7 @@ export default function NavigationMenu() {
               HOME
             </a>
             {Object.entries(navigationItems).map(([category, { categories }]) => {
-              const categoryPath = `/${category.toLowerCase().replace(/ /g, "-")}`;
+              const categoryPath = `/${category.replace(/ /g, "-")}`;
               return (
                 <div key={category} className="relative group">
                   <a href={categoryPath} className="flex items-center gap-1 hover:text-blue-200 py-3">

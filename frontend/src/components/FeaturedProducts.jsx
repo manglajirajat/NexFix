@@ -30,20 +30,27 @@ export function FeaturedProducts() {
       image: "https://imgs.search.brave.com/gtOMdCy1O1LCMIw3rgDaRbOXsbIHZ7xEhIYxfKagTUM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FtcGJlbGxtaWxs/ZXJ0b29scy5jby51/ay9jZG4vc2hvcC9w/cm9kdWN0cy8wNjAx/NWIwMDAwLmpwZz92/PTE3MDk4MTIwNzEm/d2lkdGg9OTUw",
       category: "Power Tools",
     },
+    {
+      id: 4,
+      name: "Bosch Professional Power Tools",
+      price: "₹12,999",
+      image: "https://imgs.search.brave.com/gtOMdCy1O1LCMIw3rgDaRbOXsbIHZ7xEhIYxfKagTUM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FtcGJlbGxtaWxs/ZXJ0b29scy5jby51/ay9jZG4vc2hvcC9w/cm9kdWN0cy8wNjAx/NWIwMDAwLmpwZz92/PTE3MDk4MTIwNzEm/d2lkdGg9OTUw",
+      category: "Power Tools",
+    },
   ];
 
   return (
     <div className="container mx-auto px-4 py-12">
       <h2 className="text-2xl lg:text-3xl font-bold mb-8">Featured Products</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="flex gap-6 overflow-x-auto py-4">
         {products.map((product) => (
-          <Link key={product.id} to={`/product/${product.id}`} className="group">
+          <Link key={product.id} to={`/product/${product.id}`} className="group min-w-72 w-72">
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
               <div className="relative h-48 bg-gray-100">
                 <img
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}
-                  className="object-cover w-full h-full"
+                  className="object-contain w-full h-full"
                 />
               </div>
               <div className="p-4">

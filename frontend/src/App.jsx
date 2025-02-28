@@ -8,37 +8,36 @@ import SecondaryHeader from "./components/SecondaryHeader.jsx"
 import MainHeader from "./components/MainHeader.jsx";
 
 // Form imports
-import AddProductForm from "./components/AddProductForm.jsx";
+import AddProductForm from "./components/forms/AddProductForm.jsx";
 
 // My account
 import Login from "./components/LogIn.jsx";
-import CreateAccount from "./components/CreateAccount.jsx";
-import AddAddressForm from "./components/AddAddressForm.jsx";
+import CreateAccount from "./components/forms/CreateAccount.jsx";
+import AddAddressForm from "./components/forms/AddAddressForm.jsx";
+import UpdateAddress from "./components/forms/UpdateAddress.jsx";
+import ForgotPassword from "./components/forms/ForgotPassword.jsx";
 
 // Pages import
 import HomePage from "./components/pages/HomePage.jsx"
 import ProductList from "./components/pages/ProductList.jsx";
 import Product from "./components/pages/Product.jsx";
 import MyCart from "./components/pages/MyCart.jsx";
-import CheckOut from "./components/pages/CheckOut.jsx";
-import MyOrders from "./components/MyOrders.jsx";
+import MyOrders from "./components/pages/MyOrders.jsx";
 
 // footer import
 import { Footer } from "./components/Footer.jsx";
-import ForgotPassword from "./components/ForgotPassword.jsx";
-import UpdateAddress from "./components/UpdateAddress.jsx";
 
 export default function App() {
   
   return (
     <Router>
-      <AnnouncementBar /> {/*Sales Announcement at Top*/}
-      <SecondaryHeader /> {/*About Us,Wishlisht, Order Tracking Bar*/}
-      <MainHeader />      {/*Logo,Lcation, Search, Login,Cart Bar*/}
-      <NavigationMenu />  {/*Navbar*/}
-
       <ToastContainer  autoClose={2000} position="top-center" pauseOnFocusLoss={false} pauseOnHover={false}/>
-      
+
+      <AnnouncementBar /> 
+      <SecondaryHeader />
+      <MainHeader />      
+      <NavigationMenu />  
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/addProduct" element={<AddProductForm />} />
@@ -55,9 +54,7 @@ export default function App() {
         <Route path="/:category/:subCategory" element={<ProductList />} />
         <Route path="/contact" element={"hii"} />
         <Route path="/contact/customer-support" element={"ram ram"} />
-        <Route path="/checkout" element={<CheckOut />} />
         <Route path="/product/:productId" element={<Product />} />
-        <Route path="/checkout/:cartId" element={<CheckOut />} />
       </Routes>
 
       <Footer />
