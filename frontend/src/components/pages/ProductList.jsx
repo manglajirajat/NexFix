@@ -22,6 +22,9 @@ export default function ProductList() {
       setData(result.data);
     } catch (error) {
       console.log(error);
+      toast.error("Failed to load products");
+    } finally {
+      setLoading(false);
     }
   };
 
