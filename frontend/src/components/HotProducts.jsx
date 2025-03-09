@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { TriangleAlert } from "lucide-react";
 
 export function HotProducts() {
   const [products, setProducts] = useState([]);
@@ -78,12 +79,18 @@ export function HotProducts() {
           <div key={product._id} className="group min-w-72 w-72">
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
               <div className="relative">
-                <div className="relative h-64 bg-gray-100">
-                  <img src={product.displayPicture || "/placeholder.svg"} alt={product.name} className="object-contain w-full h-full" />
+                <div className="h-64 bg-gray-100">
+                  <img src={product.displayPicture || "/placeholder.svg"} alt={product.name} className={`object-contain w-full h-full ${product.stock == 0 ? "opacity-50" : ""}`}  />
                 </div>
                 {product.badge && (
                   <span className="absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-md text-sm font-semibold">
                     {product.badge}
+                  </span>
+                )}
+                {product.stock === 0 && (
+                  <span className="absolute top-20 right-25 px-2 py-1 text-slate-800 rounded-md text-sm font-semibold">
+                    <TriangleAlert size={80} />
+                    Out of Stock
                   </span>
                 )}
               </div>
@@ -102,7 +109,7 @@ export function HotProducts() {
                   <button 
                     onClick={() => addToCart(product._id)} 
                     className="bg-yellow-400 text-black px-2 py-1 rounded-md font-bold hover:bg-yellow-500 transition-colors disabled:opacity-50" 
-                    disabled={loading}
+                    disabled={loading || product.stock === 0}
                   >
                     Add to Cart
                   </button>

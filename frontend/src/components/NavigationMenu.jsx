@@ -212,7 +212,7 @@ export default function NavigationMenu() {
               return (
                 <div key={category} className="relative group">
                   <a href={categoryPath} className="flex items-center gap-1 hover:text-blue-200 py-3">
-                    {category}
+                    {category.toUpperCase()}
                     <ChevronDown className="w-4 h-4" />
                   </a>
                   <div className="absolute left-0 top-full z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white shadow-lg rounded-lg min-w-[280px] transform translate-y-2 group-hover:translate-y-0">

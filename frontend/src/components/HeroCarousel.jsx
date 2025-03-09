@@ -50,11 +50,11 @@ const HeroCarousel = () => {
   };
 
   return (
-    <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden">
+    <div className="relative h-[350px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
+          className={`absolute inset-0 transition-transform duration-500 ease-in-out text-center md:text-left font-bold md:font-normal ${
             index === currentSlide ? "translate-x-0" : index < currentSlide ? "-translate-x-full" : "translate-x-full"
           }`}
         >
@@ -80,7 +80,7 @@ const HeroCarousel = () => {
                 <img
                   src={slide.image}
                   alt={slide.title}
-                  className="object-cover object-center opacity-90 w-full h-full"
+                  className="object-cover object-center opacity-30 md:opacity-90 w-full h-full"
                 />
               </div>
             </div>

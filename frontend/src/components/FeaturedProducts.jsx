@@ -30,6 +30,13 @@ export function FeaturedProducts() {
       image: "https://imgs.search.brave.com/gtOMdCy1O1LCMIw3rgDaRbOXsbIHZ7xEhIYxfKagTUM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FtcGJlbGxtaWxs/ZXJ0b29scy5jby51/ay9jZG4vc2hvcC9w/cm9kdWN0cy8wNjAx/NWIwMDAwLmpwZz92/PTE3MDk4MTIwNzEm/d2lkdGg9OTUw",
       category: "Power Tools",
     },
+    {
+      id: 4,
+      name: "Bosch Professional Power Tools",
+      price: "₹12,999",
+      image: "https://imgs.search.brave.com/gtOMdCy1O1LCMIw3rgDaRbOXsbIHZ7xEhIYxfKagTUM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FtcGJlbGxtaWxs/ZXJ0b29scy5jby51/ay9jZG4vc2hvcC9w/cm9kdWN0cy8wNjAx/NWIwMDAwLmpwZz92/PTE3MDk4MTIwNzEm/d2lkdGg9OTUw",
+      category: "Power Tools",
+    },
   ];
 
   return (

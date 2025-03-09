@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { Cart } from "../models/cart.model.js";
 import { Order } from "../models/order.model.js";
+import { Product } from "../models/product.model.js";
 
 const placeOrderViaCart = AsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
@@ -29,6 +30,16 @@ const placeOrderViaCart = AsyncHandler(async (req, res) => {
         shippingAddress: shippingAddress,
         paymentMethod,
     });
+
+    //decrease quantity from product inventory
+
+    cart.items.map(async (item) => {
+        const product = await Product.findById(item.product);
+
+        product.stock = product.stock-item.quantity;
+        
+        await product.save();
+    })
 
     cart.items = [];
     cart.total = 0;

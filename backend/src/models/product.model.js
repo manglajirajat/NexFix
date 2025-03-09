@@ -46,9 +46,6 @@ const ProductSchema = new mongoose.Schema({
         default : 0,
         min : 0
     },
-    isLowStock : {
-        type : Boolean,
-    },
     displayPicture : {
         type : String,
         required : true
@@ -76,7 +73,6 @@ const ProductSchema = new mongoose.Schema({
 },{timestamps : true})
 
 ProductSchema.pre('save', async function(next) {
-    this.isLowStock = this.stock <= 5;
     this.netPrice = this.price - ((this.discount * this.price) / 100);
 
     if (this.reviews.length > 0) {

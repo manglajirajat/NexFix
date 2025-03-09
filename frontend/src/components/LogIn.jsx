@@ -528,8 +528,8 @@ export default function Login() {
                 onClick={handleLogout}
                 className="flex items-center px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
               >
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign out
+                <LogOut className="w-4 h-4 md:mr-2" />
+                <span className="hidden md:block">Sign out</span>
               </button>
             </div>
           </div>
