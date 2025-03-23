@@ -103,10 +103,10 @@ export default function ProductList() {
                   <h3 className="text-lg font-medium text-gray-900">{product.name}</h3>
                   <div className="mt-2 flex items-center gap-2">
                     <span className="text-2xl font-bold text-gray-900">
-                      ${product.netPrice}
+                      ₹{product.netPrice}
                     </span>
                     <span className="text-sm text-gray-500 line-through">
-                      ${product.price}
+                      ₹{product.price}
                     </span>
                     <span className="text-sm font-medium text-green-600">
                       {product.discount}% OFF
