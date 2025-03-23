@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Trash2, Wand, ShoppingBag, MapPin, CreditCard, Truck, Package, Loader2, Plus } from "lucide-react";
 import { toast } from "react-toastify";
+import { backendUrl } from "../../constant.js";
 
 export default function MyCart() {
     const [cart, setCart] = useState(null);
@@ -13,7 +14,7 @@ export default function MyCart() {
 
     const getUser = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/me", {
+            const response = await fetch(`${backendUrl}/api/v1/user/me`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export default function MyCart() {
 
     const fetchCart = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/v1/cart/getCart", {
+            const response = await fetch(`${backendUrl}/api/v1/cart/getCart`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,7 +59,7 @@ export default function MyCart() {
 
     const removeFromCart = async (product) => {
         try {
-            const response = await fetch("http://localhost:3000/api/v1/cart/removeFromCart", {
+            const response = await fetch(`${backendUrl}/api/v1/cart/removeFromCart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export default function MyCart() {
         setProcessing(true);
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/order/placeOrderViaCart", {
+            const response = await fetch(`${backendUrl}/api/v1/order/placeOrderViaCart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -114,7 +115,7 @@ export default function MyCart() {
             const order = result.data;
 
             if (paymentMethod === "online") {
-                const paymentResponse = await fetch("http://localhost:3000/api/v1/payment/generate-payment-link", {
+                const paymentResponse = await fetch(`${backendUrl}/api/v1/payment/generate-payment-link`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

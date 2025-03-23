@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Home, Briefcase, MapPin, Building2, MapPinned, Navigation, X, Loader2 } from "lucide-react";
+import { backendUrl } from '../../constant';
 
 export default function UpdateAddress() {
     const { addressId } = useParams();
@@ -19,7 +20,7 @@ export default function UpdateAddress() {
 
     const fetchAddress = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/v1/address/getAddressById",
+            const response = await fetch(`${backendUrl}/api/v1/address/getAddressById`,
                 {
                     method: "POST",
                     headers: {
@@ -53,7 +54,7 @@ export default function UpdateAddress() {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/address/update",
+            const response = await fetch(`${backendUrl}/api/v1/address/update`,
                 {
                     method: "POST",
                     headers: {

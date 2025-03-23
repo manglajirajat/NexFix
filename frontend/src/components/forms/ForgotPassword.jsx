@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { TimerReset as KeyReset, Mail, Lock, ArrowRight, ArrowLeft, Eye, EyeOff, Shield } from "lucide-react";
+import { backendUrl } from "../../constant";
 
 export default function ForgotPassword() {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function ForgotPassword() {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/v1/otp/generate-otp-for-pass-change", {
+            const response = await fetch(`${backendUrl}/api/v1/otp/generate-otp-for-pass-change`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: data.email })
@@ -57,7 +58,7 @@ export default function ForgotPassword() {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/v1/otp/verify-otp", {
+            const response = await fetch(`${backendUrl}/api/v1/otp/verify-otp`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: data.email, otp: data.otp })
@@ -81,7 +82,7 @@ export default function ForgotPassword() {
         }
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/set-new-password", {
+            const response = await fetch(`${backendUrl}/api/v1/user/set-new-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

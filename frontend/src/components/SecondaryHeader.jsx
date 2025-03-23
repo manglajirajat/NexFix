@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MapPin, User, ShoppingCart } from "lucide-react";
-import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
 
 export default function SecondaryHeader () {
     return(

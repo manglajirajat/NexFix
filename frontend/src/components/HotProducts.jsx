@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { TriangleAlert } from "lucide-react";
+import { backendUrl } from "../constant.js";
 
 export function HotProducts() {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ export function HotProducts() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/product/getfeatured");
+        const response = await fetch(`${backendUrl}/api/v1/product/getfeatured`);
         if (!response.ok) throw new Error("Error occurred while fetching data");
         const result = await response.json();
         setProducts(result.data);
@@ -49,7 +50,7 @@ export function HotProducts() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/v1/cart/addInCart", {
+      const response = await fetch(`${backendUrl}/api/v1/cart/addInCart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

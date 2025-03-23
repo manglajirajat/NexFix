@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Grid, Search, SlidersHorizontal } from "lucide-react";
+import { backendUrl } from "../../constant";
 
 export default function ProductList() {
   const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ export default function ProductList() {
   const fetchCategoryData = async (category) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/product/getCategory/${category}`,
+        `${backendUrl}/api/v1/product/getCategory/${category}`,
         { method: "GET" }
       );
 
@@ -31,7 +32,7 @@ export default function ProductList() {
   const fetchSubcatData = async (subCategory) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/product/getSubcategory/${subCategory}`,
+        `${backendUrl}/api/v1/product/getSubcategory/${subCategory}`,
         { method: "GET" }
       );
 

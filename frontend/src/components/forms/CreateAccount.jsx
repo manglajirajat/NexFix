@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Mail, Lock, User, Phone, ArrowRight, ArrowLeft, Eye, EyeOff, Shield } from "lucide-react";
+import { backendUrl } from "../../constant";
 
 export default function CreateAccount() {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function CreateAccount() {
         }
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/v1/otp/generate-otp", {
+            const response = await fetch(`${backendUrl}/api/v1/otp/generate-otp`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({email: data.email})
@@ -66,7 +67,7 @@ export default function CreateAccount() {
         }
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/v1/otp/verify-otp", {
+            const response = await fetch(`${backendUrl}/api/v1/otp/verify-otp`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({email: data.email, otp: data.otp})
@@ -90,7 +91,7 @@ export default function CreateAccount() {
         }
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/register", {
+            const response = await fetch(`${backendUrl}/api/v1/user/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)

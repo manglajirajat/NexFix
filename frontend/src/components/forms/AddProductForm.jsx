@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { backendUrl } from "../../constant";
 
 export default function AddProductForm() {
     const navigate = useNavigate();
@@ -57,7 +58,7 @@ export default function AddProductForm() {
         });
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/product/register", {
+            const response = await fetch(`${backendUrl}/api/v1/product/register`, {
                 method: "POST",
                 body: data,
             });
@@ -82,7 +83,7 @@ export default function AddProductForm() {
         const token = localStorage.getItem("accessToken");
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/user/me", {
+            const response = await fetch(`${backendUrl}/api/v1/user/me`, {
               method: "GET",
               headers: { Authorization: `Bearer ${token}` },
             });

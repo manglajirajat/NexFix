@@ -3,6 +3,7 @@ import { ShoppingCart, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import LocationSelector from "./LocationSelector.jsx";
 import AnimatedSearch from "./AnimatedSearch.jsx";
+import { backendUrl } from '../constant.js';
 
 
 export default function MainHeader () {
@@ -15,7 +16,7 @@ export default function MainHeader () {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/user/me", {
+      const response = await fetch(`${backendUrl}/api/v1/user/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

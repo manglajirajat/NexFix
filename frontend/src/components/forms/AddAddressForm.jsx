@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Home, Briefcase, MapPin, Building2, MapPinned, Navigation, X } from "lucide-react";
 import { toast } from "react-toastify";
+import { backendUrl } from "../../constant.js";
 
 export default function AddAddressForm() {
     const [data, setData] = useState({ type: "", street: "", city: "", state: "", postalCode: "" });
@@ -17,7 +18,7 @@ export default function AddAddressForm() {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:3000/api/v1/address/add", {
+            const response = await fetch(`${backendUrl}api/v1/address/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

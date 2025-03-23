@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { backendUrl } from "../constant.js";
 
 const navigationItems = {
   Hardware: {
@@ -80,7 +81,7 @@ export default function NavigationMenu() {
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/user/me", {
+      const response = await fetch(`${backendUrl}/api/v1/user/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

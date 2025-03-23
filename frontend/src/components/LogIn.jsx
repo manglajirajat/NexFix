@@ -6,6 +6,7 @@ import {
   Package, Edit3, Plus, MapPinned, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { toast } from "react-toastify";
+import { backendUrl } from "../constant.js";
 
 export default function Login() {
   const [data, setData] = useState({ email: "", password: "" });
@@ -41,7 +42,7 @@ export default function Login() {
 
   const getProfile = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/v1/user/login", {
+      const response = await fetch(`${backendUrl}/api/v1/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -72,7 +73,7 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/user/me", {
+      const response = await fetch(`${backendUrl}/api/v1/user/me`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -104,7 +105,7 @@ export default function Login() {
 
   const fetchOrders = async () => {
     try {
-        const response = await fetch("http://localhost:3000/api/v1/order/getOrders", {
+        const response = await fetch(`${backendUrl}/api/v1/order/getOrders`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -127,7 +128,7 @@ export default function Login() {
 
   const deleteAddress = async (addressToDelete) => {
     try{
-      const response = await fetch("http://localhost:3000/api/v1/address/delete", {
+      const response = await fetch(`${backendUrl}/api/v1/address/delete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

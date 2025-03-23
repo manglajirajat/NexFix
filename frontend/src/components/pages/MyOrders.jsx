@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Package2, CreditCard, Banknote, AlertCircle, Loader2, Calendar, ShoppingBag, TrendingUp, Truck, CheckCircle2, ThumbsUp, ThumbsDown, CircleX, ChevronLeft, ChevronRight } from "lucide-react";
+import { backendUrl } from "../../constant";
 
 export default function MyOrders() {
     const [orders, setOrders] = useState([]);
@@ -12,7 +13,7 @@ export default function MyOrders() {
 
     const fetchOrders = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/v1/order/getOrders", {
+            const response = await fetch(`${backendUrl}/api/v1/order/getOrders`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export default function MyOrders() {
 
     const updateOrderStatus = () => {
         orders.forEach(async(order) => {
-            const response = await fetch(`http://localhost:3000/api/v1/order/updateOrderStatus/${order._id}`, {
+            const response = await fetch(`${backendUrl}/api/v1/order/updateOrderStatus/${order._id}`, {
                 method : "GET",
                 headers : {
                     "Content-Type" : "application/json",
@@ -47,7 +48,7 @@ export default function MyOrders() {
 
     const redirectToPayment = (id) => async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/order/getPaymentLink/${id}`, {
+            const response = await fetch(`${backendUrl}/api/v1/order/getPaymentLink/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
