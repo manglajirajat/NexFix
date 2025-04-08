@@ -18,7 +18,7 @@ export default function AddAddressForm() {
         setError("");
 
         try {
-            const response = await fetch(`${backendUrl}api/v1/address/add`, {
+            const response = await fetch(`${backendUrl}/api/v1/address/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
