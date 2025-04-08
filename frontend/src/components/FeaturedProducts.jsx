@@ -4,9 +4,9 @@ export function FeaturedProducts() {
   const products = [
     {
       id: 1,
-      name: "Premium Stainless Steel Tools Set",
-      price: "₹2,499",
-      image: "https://imgs.search.brave.com/7uWf7D-TdmEFiVW9okk3-81aQdzzsSaXDWHNEXaTJ7A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFtREl5Uk91Ykwu/anBn",
+      name: "Barbques & Grills",
+      price: "₹900",
+      image: "https://th.bing.com/th/id/OIP.x49RtAoKt2eUXm2OHKD5wgHaHa?rs=1&pid=ImgDetMain",
       category: "Hand Tools",
     },
     {
@@ -25,16 +25,9 @@ export function FeaturedProducts() {
     },
     {
       id: 4,
-      name: "Bosch Professional Power Tools",
-      price: "₹12,999",
-      image: "https://imgs.search.brave.com/gtOMdCy1O1LCMIw3rgDaRbOXsbIHZ7xEhIYxfKagTUM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FtcGJlbGxtaWxs/ZXJ0b29scy5jby51/ay9jZG4vc2hvcC9w/cm9kdWN0cy8wNjAx/NWIwMDAwLmpwZz92/PTE3MDk4MTIwNzEm/d2lkdGg9OTUw",
-      category: "Power Tools",
-    },
-    {
-      id: 4,
-      name: "Bosch Professional Power Tools",
-      price: "₹12,999",
-      image: "https://imgs.search.brave.com/gtOMdCy1O1LCMIw3rgDaRbOXsbIHZ7xEhIYxfKagTUM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FtcGJlbGxtaWxs/ZXJ0b29scy5jby51/ay9jZG4vc2hvcC9w/cm9kdWN0cy8wNjAx/NWIwMDAwLmpwZz92/PTE3MDk4MTIwNzEm/d2lkdGg9OTUw",
+      name: "Gas Stoves",
+      price: "₹12,99",
+      image: "https://i5.walmartimages.com/seo/Hassch-Rocket-Stove-for-Cooking-Outdoor-Camping-Portable-Wood-Burning-Stove-Camp-Fire-Tower-for-BBQ-Hunting-Fishing-Black_9e9f02bc-c3b5-498c-b88e-6121b4313d5a.d42b6291638ceccd9158b8a965e96798.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
       category: "Power Tools",
     },
   ];
