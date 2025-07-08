@@ -241,10 +241,12 @@
 // }
 
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Star, ShoppingCart, CreditCard, Heart, Share2, Truck, Shield, RotateCcw, ChevronRight, ChevronLeft } from 'lucide-react';
 
 function Product() {
+  const { productId } = useParams();
   const [productDetail, setProductDetail] = useState(null);
   const [currentImage, setCurrentImage] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -454,6 +456,7 @@ function Product() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      <h1>productId = {productId}</h1>
       <div className="max-w-7xl mx-auto px-4 py-8">
         {productDetail && (
           <div className="space-y-12">
